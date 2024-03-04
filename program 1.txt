@@ -1,0 +1,191 @@
+SQL> create table student(rollno int, name varchar(20), course varchar(10), year int);
+
+Table created.
+
+SQL> select * from student;
+
+no rows selected
+
+SQL> insert into student values(&rollno, &name, &course, &year);
+Enter value for rollno: 1
+Enter value for name: Adarsh
+Enter value for course: 'CSE'
+Enter value for year: 2024
+old   1: insert into student values(&rollno, &name, &course, &year)
+new   1: insert into student values(1, Adarsh, 'CSE', 2024)
+insert into student values(1, Adarsh, 'CSE', 2024)
+                              *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> /
+Enter value for rollno: 1
+Enter value for name: 'Aadarsh'
+Enter value for course: 'CSE'
+Enter value for year: 2024
+old   1: insert into student values(&rollno, &name, &course, &year)
+new   1: insert into student values(1, 'Aadarsh', 'CSE', 2024)
+
+1 row created.
+
+SQL> /
+Enter value for rollno: 2
+Enter value for name: 'Akash'
+Enter value for course: 'MECH'
+Enter value for year: 2024
+old   1: insert into student values(&rollno, &name, &course, &year)
+new   1: insert into student values(2, 'Akash', 'MECH', 2024)
+
+1 row created.
+
+SQL> select * from student;
+
+    ROLLNO NAME                 COURSE           YEAR
+---------- -------------------- ---------- ----------
+         1 Aadarsh              CSE              2024
+         2 Akash                MECH             2024
+
+SQL> alter table student add college varchar(10);
+
+Table altered.
+
+SQL> select * from student;
+
+    ROLLNO NAME                 COURSE           YEAR COLLEGE
+---------- -------------------- ---------- ---------- ----------
+         1 Aadarsh              CSE              2024
+         2 Akash                MECH             2024
+
+SQL> alter table student modify (college int);
+
+Table altered.
+
+SQL> alter table student rename column college to admsno;
+
+Table altered.
+
+SQL> select * from student;
+
+    ROLLNO NAME                 COURSE           YEAR     ADMSNO
+---------- -------------------- ---------- ---------- ----------
+         1 Aadarsh              CSE              2024
+         2 Akash                MECH             2024
+
+SQL> alter table student drop column admsno;
+
+Table altered.
+
+SQL> select * from student;
+
+    ROLLNO NAME                 COURSE           YEAR
+---------- -------------------- ---------- ----------
+         1 Aadarsh              CSE              2024
+         2 Akash                MECH             2024
+
+SQL> drop table student;
+
+Table dropped.
+
+SQL> create table student(rollno int, name varchar(20), course varchar(10), year int);
+
+Table created.
+
+SQL> insert into student values(&rollno, &name, &course, &year);
+Enter value for rollno: 1
+Enter value for name: 'Aadarsh'
+Enter value for course: 'CSE'
+Enter value for year: 2024
+old   1: insert into student values(&rollno, &name, &course, &year)
+new   1: insert into student values(1, 'Aadarsh', 'CSE', 2024)
+
+1 row created.
+
+SQL> select * from student;
+
+    ROLLNO NAME                 COURSE           YEAR
+---------- -------------------- ---------- ----------
+         1 Aadarsh              CSE              2024
+
+SQL> truncate table student;
+
+Table truncated.
+
+SQL> select * from student;
+
+no rows selected
+
+SQL> create table student(rollno int, name varchar(20), course varchar(10), year int);
+create table student(rollno int, name varchar(20), course varchar(10), year int)
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> drop table student;
+
+Table dropped.
+
+SQL> create table student(rollno int, name varchar(20), course varchar(10), year int);
+
+Table created.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ COURSE                                             VARCHAR2(10)
+ YEAR                                               NUMBER(38)
+
+SQL> alter table student add college varchar(10);
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ COURSE                                             VARCHAR2(10)
+ YEAR                                               NUMBER(38)
+ COLLEGE                                            VARCHAR2(10)
+
+SQL> alter table student modify (college int);
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ COURSE                                             VARCHAR2(10)
+ YEAR                                               NUMBER(38)
+ COLLEGE                                            NUMBER(38)
+
+SQL> alter table student rename column college to admsno;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ COURSE                                             VARCHAR2(10)
+ YEAR                                               NUMBER(38)
+ ADMSNO                                             NUMBER(38)
+
+SQL> alter table student drop column admsno;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ COURSE                                             VARCHAR2(10)
+ YEAR                                               NUMBER(38)
+

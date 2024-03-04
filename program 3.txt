@@ -1,0 +1,320 @@
+SQL> connect system
+Enter password:
+Connected.
+SQL> desc department;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_ID                                   NOT NULL VARCHAR2(7)
+ DEPT_NAME                                          VARCHAR2(10)
+ CITY                                               VARCHAR2(10)
+
+SQL> desc emp;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMP_ID                                    NOT NULL VARCHAR2(7)
+ EMP_NAME                                           VARCHAR2(10)
+ DEPT_ID                                            VARCHAR2(7)
+ SALARY                                             NUMBER(7,2)
+
+SQL> create table emp(emp_id varchar(7) primary key, emp_name varchar(10), dept_id varchar(7), salary number(7,2), foreign key(dept_id) references emp(dept_id));
+create table emp(emp_id varchar(7) primary key, emp_name varchar(10), dept_id varchar(7), salary number(7,2), foreign key(dept_id) references emp(dept_id))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> drop table emp;
+
+Table dropped.
+
+SQL> create table emp(emp_id varchar(7) primary key, emp_name varchar(10), dept_id varchar(7), salary number(7,2), foreign key(dept_id) references emp(dept_id));
+create table emp(emp_id varchar(7) primary key, emp_name varchar(10), dept_id varchar(7), salary number(7,2), foreign key(dept_id) references emp(dept_id))
+                                                                                                                                              *
+ERROR at line 1:
+ORA-02270: no matching unique or primary key for this column-list
+
+
+SQL> create table emp(emp_id varchar(7) primary key, emp_name varchar(10), dept_id varchar(7), salary number(7,2), foreign key(dept_id) references department(dept_id));
+
+Table created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into department values('&dept_id','&dept_name','&city');
+Enter value for dept_id: de101
+Enter value for dept_name: CS
+Enter value for city: Kochi
+old   1: insert into department values('&dept_id','&dept_name','&city')
+new   1: insert into department values('de101','CS','Kochi')
+
+1 row created.
+
+SQL> /
+Enter value for dept_id: de102
+Enter value for dept_name: MECH
+Enter value for city: Thrissur
+old   1: insert into department values('&dept_id','&dept_name','&city')
+new   1: insert into department values('de102','MECH','Thrissur')
+
+1 row created.
+
+SQL> /
+Enter value for dept_id: de103
+Enter value for dept_name: CIVIL
+Enter value for city: Kottayam
+old   1: insert into department values('&dept_id','&dept_name','&city')
+new   1: insert into department values('de103','CIVIL','Kottayam')
+
+1 row created.
+
+SQL> /
+Enter value for dept_id: de104
+Enter value for dept_name: EEE
+Enter value for city: Thiruvalla
+old   1: insert into department values('&dept_id','&dept_name','&city')
+new   1: insert into department values('de104','EEE','Thiruvalla')
+
+1 row created.
+
+SQL> /
+Enter value for dept_id: de105
+Enter value for dept_name: EC
+Enter value for city: Kannur
+old   1: insert into department values('&dept_id','&dept_name','&city')
+new   1: insert into department values('de105','EC','Kannur')
+
+1 row created.
+
+SQL> select * from department;
+
+DEPT_ID DEPT_NAME  CITY
+------- ---------- ----------
+de101   CS         Kochi
+de102   MECH       Thrissur
+de103   CIVIL      Kottayam
+de104   EEE        Thiruvalla
+de105   EC         Kannur
+
+SQL> insert into department values('&emp_id','&emp_name','&dept_id',&salary);
+Enter value for emp_id: emp10
+Enter value for emp_name: Soma
+Enter value for dept_id: de101
+Enter value for salary: 90000
+old   1: insert into department values('&emp_id','&emp_name','&dept_id',&salary)
+new   1: insert into department values('emp10','Soma','de101',90000)
+insert into department values('emp10','Soma','de101',90000)
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> insert into emp values('&emp_id','&emp_name','&dept_id',&salary);
+Enter value for emp_id: emp11
+Enter value for emp_name: Soma
+Enter value for dept_id: de105
+Enter value for salary: 90000
+old   1: insert into emp values('&emp_id','&emp_name','&dept_id',&salary)
+new   1: insert into emp values('emp11','Soma','de105',90000)
+
+1 row created.
+
+SQL> /
+Enter value for emp_id: emp12
+Enter value for emp_name: Raghav
+Enter value for dept_id: de103
+Enter value for salary: 75000
+old   1: insert into emp values('&emp_id','&emp_name','&dept_id',&salary)
+new   1: insert into emp values('emp12','Raghav','de103',75000)
+
+1 row created.
+
+SQL> /
+Enter value for emp_id: emp13
+Enter value for emp_name: Meera
+Enter value for dept_id: de101
+Enter value for salary: 50000
+old   1: insert into emp values('&emp_id','&emp_name','&dept_id',&salary)
+new   1: insert into emp values('emp13','Meera','de101',50000)
+
+1 row created.
+
+SQL> /
+Enter value for emp_id: emp14
+Enter value for emp_name: Balu
+Enter value for dept_id: de102
+Enter value for salary: 85000
+old   1: insert into emp values('&emp_id','&emp_name','&dept_id',&salary)
+new   1: insert into emp values('emp14','Balu','de102',85000)
+
+1 row created.
+
+SQL> /
+Enter value for emp_id: emp15
+Enter value for emp_name: Tanya
+Enter value for dept_id: de104
+Enter value for salary: 65000
+old   1: insert into emp values('&emp_id','&emp_name','&dept_id',&salary)
+new   1: insert into emp values('emp15','Tanya','de104',65000)
+
+1 row created.
+
+SQL> select * from emp;
+
+EMP_ID  EMP_NAME   DEPT_ID     SALARY
+------- ---------- ------- ----------
+emp11   Soma       de105        90000
+emp12   Raghav     de103        75000
+emp13   Meera      de101        50000
+emp14   Balu       de102        85000
+emp15   Tanya      de104        65000
+
+SQL> update emp set salary=60000 where emp_id=emp15;
+update emp set salary=60000 where emp_id=emp15
+                                         *
+ERROR at line 1:
+ORA-00904: "EMP15": invalid identifier
+
+
+SQL> update emp set salary=60000 where emp_id='emp15';
+
+1 row updated.
+
+SQL> select * from emp;
+
+EMP_ID  EMP_NAME   DEPT_ID     SALARY
+------- ---------- ------- ----------
+emp11   Soma       de105        90000
+emp12   Raghav     de103        75000
+emp13   Meera      de101        50000
+emp14   Balu       de102        85000
+emp15   Tanya      de104        60000
+
+SQL> delete from emp where emp_id='emp15';
+
+1 row deleted.
+
+SQL> select * from emp;
+
+EMP_ID  EMP_NAME   DEPT_ID     SALARY
+------- ---------- ------- ----------
+emp11   Soma       de105        90000
+emp12   Raghav     de103        75000
+emp13   Meera      de101        50000
+emp14   Balu       de102        85000
+
+SQL> select emp_name, dept_name from emp, department where emp.dept_id = department.dept_id;
+
+EMP_NAME   DEPT_NAME
+---------- ----------
+Meera      CS
+Balu       MECH
+Raghav     CIVIL
+Soma       EC
+
+SQL> select emp_name from emp, department where city = 'Kochi' and emp.dept_id = department.dept_id;
+
+EMP_NAME
+----------
+Meera
+
+SQL> delete from emp where name='Meera';
+delete from emp where name='Meera'
+                      *
+ERROR at line 1:
+ORA-00904: "NAME": invalid identifier
+
+
+SQL> delete from emp where emp_name='Meera';
+
+1 row deleted.
+
+SQL> select * from emp;
+
+EMP_ID  EMP_NAME   DEPT_ID     SALARY
+------- ---------- ------- ----------
+emp11   Soma       de105        90000
+emp12   Raghav     de103        75000
+emp14   Balu       de102        85000
+
+SQL> update emp set salary = salary + 500 where dept_no = 'de105';
+update emp set salary = salary + 500 where dept_no = 'de105'
+                                           *
+ERROR at line 1:
+ORA-00904: "DEPT_NO": invalid identifier
+
+
+SQL> update emp set salary = salary + 500 where dept_id = 'de105';
+
+1 row updated.
+
+SQL> select * from emp;
+
+EMP_ID  EMP_NAME   DEPT_ID     SALARY
+------- ---------- ------- ----------
+emp11   Soma       de105        90500
+emp12   Raghav     de103        75000
+emp14   Balu       de102        85000
+
+SQL> select emp_name, dept_name from emp, department where salary > 80000 and emp.dept_id = department.dept_id;
+
+EMP_NAME   DEPT_NAME
+---------- ----------
+Balu       MECH
+Soma       EC
+
+SQL> update emp set dept_id = 'de106' where emp_name =  'Soma';
+update emp set dept_id = 'de106' where emp_name =  'Soma'
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C004001) violated - parent key not
+found
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

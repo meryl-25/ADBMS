@@ -1,0 +1,372 @@
+
+SQL> create table employee(id int, name varchar(20), dept varchar(10), salary number(7,2), city varchar(10));
+
+Table created.
+
+SQL> desc employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ DEPT                                               VARCHAR2(10)
+ SALARY                                             NUMBER(7,2)
+ CITY                                               VARCHAR2(10)
+
+SQL> insert into employee(&id, &name, &dept, &salary, &city);
+Enter value for id: 100
+Enter value for name: 'Livya'
+Enter value for dept: 'sales'
+Enter value for salary: 20000.00
+Enter value for city:
+old   1: insert into employee(&id, &name, &dept, &salary, &city)
+new   1: insert into employee(100, 'Livya', 'sales', 20000.00, )
+insert into employee(100, 'Livya', 'sales', 20000.00, )
+                     *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> /
+Enter value for id: 100
+Enter value for name: 'Livya'
+Enter value for dept: 'sales'
+Enter value for salary: 20000.00
+Enter value for city: 'Ernakulam'
+old   1: insert into employee(&id, &name, &dept, &salary, &city)
+new   1: insert into employee(100, 'Livya', 'sales', 20000.00, 'Ernakulam')
+insert into employee(100, 'Livya', 'sales', 20000.00, 'Ernakulam')
+                     *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> /
+Enter value for id: 1
+Enter value for name: 'Livya'
+Enter value for dept: 'sales'
+Enter value for salary: 20000.00
+Enter value for city: 'Ernakulam'
+old   1: insert into employee(&id, &name, &dept, &salary, &city)
+new   1: insert into employee(1, 'Livya', 'sales', 20000.00, 'Ernakulam')
+insert into employee(1, 'Livya', 'sales', 20000.00, 'Ernakulam')
+                     *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> drop table employee;
+
+Table dropped.
+
+SQL> create table employee(id number(5), name varchar(20), dept varchar(10), salary number(7,2), city varchar(10));
+
+Table created.
+
+SQL> desc employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(5)
+ NAME                                               VARCHAR2(20)
+ DEPT                                               VARCHAR2(10)
+ SALARY                                             NUMBER(7,2)
+ CITY                                               VARCHAR2(10)
+
+SQL> insert into employee(&id, &name, &dept, &salary, &city);
+Enter value for id: 100
+Enter value for name: 'Livya'
+Enter value for dept: 'sales'
+Enter value for salary: 20000.00
+Enter value for city: 'Ernakulam'
+old   1: insert into employee(&id, &name, &dept, &salary, &city)
+new   1: insert into employee(100, 'Livya', 'sales', 20000.00, 'Ernakulam')
+insert into employee(100, 'Livya', 'sales', 20000.00, 'Ernakulam')
+                     *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into employee(&id, &name, &dept, &salary, &city);
+Enter value for id: 1
+Enter value for name: 'Livya'
+Enter value for dept: 'sales'
+Enter value for salary: 20000.00
+Enter value for city: 'Ernakulam'
+old   1: insert into employee(&id, &name, &dept, &salary, &city)
+new   1: insert into employee(1, 'Livya', 'sales', 20000.00, 'Ernakulam')
+insert into employee(1, 'Livya', 'sales', 20000.00, 'Ernakulam')
+                     *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> drop table employee;
+
+Table dropped.
+
+SQL> create table employee(empid varchar(5), name varchar(20), dept varchar(10), salary number(7,2), city varchar(10));
+
+Table created.
+
+SQL> desc employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPID                                              VARCHAR2(5)
+ NAME                                               VARCHAR2(20)
+ DEPT                                               VARCHAR2(10)
+ SALARY                                             NUMBER(7,2)
+ CITY                                               VARCHAR2(10)
+
+SQL> insert into employee(&id, &name, &dept, &salary, &city);
+Enter value for id: 'ee10'
+Enter value for name: 'Livya'
+Enter value for dept: 'sales'
+Enter value for salary: 20000.00
+Enter value for city: 'Ernakulam'
+old   1: insert into employee(&id, &name, &dept, &salary, &city)
+new   1: insert into employee('ee10', 'Livya', 'sales', 20000.00, 'Ernakulam')
+insert into employee('ee10', 'Livya', 'sales', 20000.00, 'Ernakulam')
+                     *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into employee('&id', '&name', '&dept', &salary, '&city');
+Enter value for id: 'ee10'
+Enter value for name: 'Livya'
+Enter value for dept: 'sales'
+Enter value for salary: 20000.00
+Enter value for city: 'Ernakulam'
+old   1: insert into employee('&id', '&name', '&dept', &salary, '&city')
+new   1: insert into employee(''ee10'', ''Livya'', ''sales'', 20000.00, ''Ernakulam'')
+insert into employee(''ee10'', ''Livya'', ''sales'', 20000.00, ''Ernakulam'')
+                     *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into employee(&id, &name, &dept, &salary, &city);
+Enter value for id: 100
+Enter value for name: 100l
+Enter value for dept: lll
+Enter value for salary:
+Enter value for city:
+old   1: insert into employee(&id, &name, &dept, &salary, &city)
+new   1: insert into employee(100, 100l, lll, , )
+insert into employee(100, 100l, lll, , )
+                     *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into employee values(&id, &name, &dept, &salary, &city);
+Enter value for id: 'ee10'
+Enter value for name: 'Livya'
+Enter value for dept: 'sales'
+Enter value for salary: 20000.00
+Enter value for city: 'Ernakulam'
+old   1: insert into employee values(&id, &name, &dept, &salary, &city)
+new   1: insert into employee values('ee10', 'Livya', 'sales', 20000.00, 'Ernakulam')
+
+1 row created.
+
+SQL> select * from employee;
+
+EMPID NAME                 DEPT           SALARY CITY
+----- -------------------- ---------- ---------- ----------
+ee10  Livya                sales           20000 Ernakulam
+
+SQL> insert into employee values(&id, &name, &dept, &salary, &city);
+Enter value for id: 'ee20'
+Enter value for name: 'Malavika'
+Enter value for dept: 50000.25
+Enter value for salary: 'Malavika'
+Enter value for city:
+old   1: insert into employee values(&id, &name, &dept, &salary, &city)
+new   1: insert into employee values('ee20', 'Malavika', 50000.25, 'Malavika', )
+insert into employee values('ee20', 'Malavika', 50000.25, 'Malavika', )
+                                                                      *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> insert into employee values(&id, &name, &dept, &salary, &city);
+Enter value for id: 'ee20'
+Enter value for name: 'Malavika'
+Enter value for dept: 'Marketing'
+Enter value for salary: 50000.25
+Enter value for city: 'Kozhikode'
+old   1: insert into employee values(&id, &name, &dept, &salary, &city)
+new   1: insert into employee values('ee20', 'Malavika', 'Marketing', 50000.25, 'Kozhikode')
+
+1 row created.
+
+SQL> /
+Enter value for id: 'ee30'
+Enter value for name: 'Meryl'
+Enter value for dept: 'Sales'
+Enter value for salary: 25000.00
+Enter value for city: 'Muvattupuzha'
+old   1: insert into employee values(&id, &name, &dept, &salary, &city)
+new   1: insert into employee values('ee30', 'Meryl', 'Sales', 25000.00, 'Muvattupuzha')
+insert into employee values('ee30', 'Meryl', 'Sales', 25000.00, 'Muvattupuzha')
+                                                                *
+ERROR at line 1:
+ORA-12899: value too large for column "SYSTEM"."EMPLOYEE"."CITY" (actual: 12,
+maximum: 10)
+
+
+SQL> /
+Enter value for id: 'ee30'
+Enter value for name: 'Meryl'
+Enter value for dept: 'Sales'
+Enter value for salary: 25000.00
+Enter value for city: 'Kochi'
+old   1: insert into employee values(&id, &name, &dept, &salary, &city)
+new   1: insert into employee values('ee30', 'Meryl', 'Sales', 25000.00, 'Kochi')
+
+1 row created.
+
+SQL> /
+Enter value for id: 'ee40'
+Enter value for name: 'Nikhila'
+Enter value for dept: 'Finance'
+Enter value for salary: 75000
+Enter value for city: 'Tvm'
+old   1: insert into employee values(&id, &name, &dept, &salary, &city)
+new   1: insert into employee values('ee40', 'Nikhila', 'Finance', 75000, 'Tvm')
+
+1 row created.
+
+SQL> /
+Enter value for id: 'ee50'
+Enter value for name: 'Sonu'
+Enter value for dept: 'Finance'
+Enter value for salary: 50000.00
+Enter value for city: 'Kannur'
+old   1: insert into employee values(&id, &name, &dept, &salary, &city)
+new   1: insert into employee values('ee50', 'Sonu', 'Finance', 50000.00, 'Kannur')
+
+1 row created.
+
+SQL> select * from employee;
+
+EMPID NAME                 DEPT           SALARY CITY
+----- -------------------- ---------- ---------- ----------
+ee10  Livya                sales           20000 Ernakulam
+ee20  Malavika             Marketing    50000.25 Kozhikode
+ee30  Meryl                Sales           25000 Kochi
+ee40  Nikhila              Finance         75000 Tvm
+ee50  Sonu                 Finance         50000 Kannur
+
+SQL> select * from employee where dept='sales';
+
+EMPID NAME                 DEPT           SALARY CITY
+----- -------------------- ---------- ---------- ----------
+ee10  Livya                sales           20000 Ernakulam
+
+SQL> update employee set dept='Sales' where id='ee10';
+update employee set dept='Sales' where id='ee10'
+                                       *
+ERROR at line 1:
+ORA-00904: "ID": invalid identifier
+
+
+SQL> update employee set dept='Sales' where empid='ee10';
+
+1 row updated.
+
+SQL> select * from employee;
+
+EMPID NAME                 DEPT           SALARY CITY
+----- -------------------- ---------- ---------- ----------
+ee10  Livya                Sales           20000 Ernakulam
+ee20  Malavika             Marketing    50000.25 Kozhikode
+ee30  Meryl                Sales           25000 Kochi
+ee40  Nikhila              Finance         75000 Tvm
+ee50  Sonu                 Finance         50000 Kannur
+
+SQL> select * from employee where dept='Sales';
+
+EMPID NAME                 DEPT           SALARY CITY
+----- -------------------- ---------- ---------- ----------
+ee10  Livya                Sales           20000 Ernakulam
+ee30  Meryl                Sales           25000 Kochi
+
+SQL> select * from employee where empid='ee10';
+
+EMPID NAME                 DEPT           SALARY CITY
+----- -------------------- ---------- ---------- ----------
+ee10  Livya                Sales           20000 Ernakulam
+
+SQL> select * from employee where salary between 10000 and 30000;
+
+EMPID NAME                 DEPT           SALARY CITY
+----- -------------------- ---------- ---------- ----------
+ee10  Livya                Sales           20000 Ernakulam
+ee30  Meryl                Sales           25000 Kochi
+
+SQL> select * from employee order by name;
+
+EMPID NAME                 DEPT           SALARY CITY
+----- -------------------- ---------- ---------- ----------
+ee10  Livya                Sales           20000 Ernakulam
+ee20  Malavika             Marketing    50000.25 Kozhikode
+ee30  Meryl                Sales           25000 Kochi
+ee40  Nikhila              Finance         75000 Tvm
+ee50  Sonu                 Finance         50000 Kannur
+
+SQL> update employee set salary=250;
+
+5 rows updated.
+
+SQL> select * from employee;
+
+EMPID NAME                 DEPT           SALARY CITY
+----- -------------------- ---------- ---------- ----------
+ee10  Livya                Sales             250 Ernakulam
+ee20  Malavika             Marketing         250 Kozhikode
+ee30  Meryl                Sales             250 Kochi
+ee40  Nikhila              Finance           250 Tvm
+ee50  Sonu                 Finance           250 Kannur
+
+SQL> alter table employee add (joindate date);
+
+Table altered.
+
+SQL> select * from employee;
+
+EMPID NAME                 DEPT           SALARY CITY       JOINDATE
+----- -------------------- ---------- ---------- ---------- ---------
+ee10  Livya                Sales             250 Ernakulam
+ee20  Malavika             Marketing         250 Kozhikode
+ee30  Meryl                Sales             250 Kochi
+ee40  Nikhila              Finance           250 Tvm
+ee50  Sonu                 Finance           250 Kannur
+
+SQL> update employee set joindate='08-Feb-24';
+
+5 rows updated.
+
+SQL> select * from employee;
+
+EMPID NAME                 DEPT           SALARY CITY       JOINDATE
+----- -------------------- ---------- ---------- ---------- ---------
+ee10  Livya                Sales             250 Ernakulam  08-FEB-24
+ee20  Malavika             Marketing         250 Kozhikode  08-FEB-24
+ee30  Meryl                Sales             250 Kochi      08-FEB-24
+ee40  Nikhila              Finance           250 Tvm        08-FEB-24
+ee50  Sonu                 Finance           250 Kannur     08-FEB-24
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+

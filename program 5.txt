@@ -1,0 +1,107 @@
+
+SQL> connect system
+Enter password:
+Connected.
+SQL> select * from company;
+
+    PRO_ID PRO_NAME      SUP_ID     CAT_ID       UNIT      PRICE
+---------- --------- ---------- ---------- ---------- ----------
+         1 Book               1          1         10         18
+         2 Pen                1          1         24         19
+         3 Pencil             1          2         12         10
+         4 Box                2          2         48         22
+         5 Chocolate          2          2         36         21
+
+SQL> select min(price) from company where sup_id = 2;
+
+MIN(PRICE)
+----------
+        21
+
+SQL> select max(price) from company where sup_id = 2;
+
+MAX(PRICE)
+----------
+        22
+
+SQL> select count(cat_id) from company where cat_id = 1;
+
+COUNT(CAT_ID)
+-------------
+            2
+
+SQL> select count(pro_name) from company where price > 20;
+
+COUNT(PRO_NAME)
+---------------
+              2
+
+SQL> select sum (price) from company where sup_id = 1;
+
+SUM(PRICE)
+----------
+        47
+
+SQL> select avg (price) from company;
+
+AVG(PRICE)
+----------
+        18
+
+SQL> select avg (price) from company where cat_id = 1;
+
+AVG(PRICE)
+----------
+      18.5
+
+SQL> select * from company where price > (select avg (price) from company);
+
+    PRO_ID PRO_NAME      SUP_ID     CAT_ID       UNIT      PRICE
+---------- --------- ---------- ---------- ---------- ----------
+         2 Pen                1          1         24         19
+         4 Box                2          2         48         22
+         5 Chocolate          2          2         36         21
+
+SQL> select sum (price) from company where cat_id = 1;
+
+SUM(PRICE)
+----------
+        37
+
+SQL> select avg (price) from company where cat_id = 1;
+
+AVG(PRICE)
+----------
+      18.5
+
+SQL> select avg (price) from company where sup_id = 1;
+
+AVG(PRICE)
+----------
+15.6666667
+
+SQL> select * from company where price < (select avg (price) from company);
+
+    PRO_ID PRO_NAME      SUP_ID     CAT_ID       UNIT      PRICE
+---------- --------- ---------- ---------- ---------- ----------
+         3 Pencil             1          2         12         10
+
+SQL> select * from company where price <= (select avg (price) from company);
+
+    PRO_ID PRO_NAME      SUP_ID     CAT_ID       UNIT      PRICE
+---------- --------- ---------- ---------- ---------- ----------
+         1 Book               1          1         10         18
+         3 Pencil             1          2         12         10
+
+SQL> select * from company where price >= (select avg (price) from company);
+
+    PRO_ID PRO_NAME      SUP_ID     CAT_ID       UNIT      PRICE
+---------- --------- ---------- ---------- ---------- ----------
+         1 Book               1          1         10         18
+         2 Pen                1          1         24         19
+         4 Box                2          2         48         22
+         5 Chocolate          2          2         36         21
+
+SQL> commit;
+
+Commit complete.

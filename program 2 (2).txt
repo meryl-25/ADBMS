@@ -1,0 +1,1164 @@
+SQL> create table customer(id number(5) primary key, name varchar(10), address varchar(20), city varchar(10), country varchar(10), age number(2), salary number(6,2));
+
+Table created.
+
+SQL> desc customer;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(5)
+ NAME                                               VARCHAR2(10)
+ ADDRESS                                            VARCHAR2(20)
+ CITY                                               VARCHAR2(10)
+ COUNTRY                                            VARCHAR2(10)
+ AGE                                                NUMBER(2)
+ SALARY                                             NUMBER(6,2)
+
+SQL> insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary);
+Enter value for id: 1000
+Enter value for name: Priya
+Enter value for address: Priya Bhavan
+Enter value for city: Ernakulam
+Enter value for country: India
+Enter value for age: 25
+Enter value for salary: 50000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1000, 'Priya', 'Priya Bhavan', 'Ernakulam', 'India', 25, 50000.00)
+insert into customer values(1000, 'Priya', 'Priya Bhavan', 'Ernakulam', 'India', 25, 50000.00)
+                                                                                     *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+SQL> /
+Enter value for id: 1000
+Enter value for name: Priya
+Enter value for address: Priya Bhavan
+Enter value for city: Ernakulam
+Enter value for country: India
+Enter value for age: 25
+Enter value for salary: 5000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1000, 'Priya', 'Priya Bhavan', 'Ernakulam', 'India', 25, 5000.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1001
+Enter value for name: Anupama
+Enter value for address: Anu Villa
+Enter value for city: Thrissur
+Enter value for country: India
+Enter value for age: 30
+Enter value for salary: 4500.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1001, 'Anupama', 'Anu Villa', 'Thrissur', 'India', 30, 4500.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1002
+Enter value for name: Ramesh
+Enter value for address: Ram Bhavan
+Enter value for city: Kottayam
+Enter value for country: India
+Enter value for age: 21
+Enter value for salary: 6000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1002, 'Ramesh', 'Ram Bhavan', 'Kottayam', 'India', 21, 6000.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1003
+Enter value for name: Nikhil
+Enter value for address: Nikhs Palace
+Enter value for city: Kozhikode
+Enter value for country: India
+Enter value for age: 35
+Enter value for salary: 3000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1003, 'Nikhil', 'Nikhs Palace', 'Kozhikode', 'India', 35, 3000.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1004
+Enter value for name: Sija
+Enter value for address: Sija Bhavan
+Enter value for city: Thiruvalla
+Enter value for country: India
+Enter value for age: 28
+Enter value for salary: 2500.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1004, 'Sija', 'Sija Bhavan', 'Thiruvalla', 'India', 28, 2500.00)
+
+1 row created.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS              CITY       COUNTRY           AGE
+---------- ---------- -------------------- ---------- ---------- ----------
+    SALARY
+----------
+      1000 Priya      Priya Bhavan         Ernakulam  India              25
+      5000
+
+      1001 Anupama    Anu Villa            Thrissur   India              30
+      4500
+
+      1002 Ramesh     Ram Bhavan           Kottayam   India              21
+      6000
+
+
+        ID NAME       ADDRESS              CITY       COUNTRY           AGE
+---------- ---------- -------------------- ---------- ---------- ----------
+    SALARY
+----------
+      1003 Nikhil     Nikhs Palace         Kozhikode  India              35
+      3000
+
+      1004 Sija       Sija Bhavan          Thiruvalla India              28
+      2500
+
+
+SQL> alter table customer modify(address varchr(15));
+alter table customer modify(address varchr(15))
+                                          *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> alter table customer modify(address varchar(15));
+
+Table altered.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS         CITY       COUNTRY           AGE
+---------- ---------- --------------- ---------- ---------- ----------
+    SALARY
+----------
+      1000 Priya      Priya Bhavan    Ernakulam  India              25
+      5000
+
+      1001 Anupama    Anu Villa       Thrissur   India              30
+      4500
+
+      1002 Ramesh     Ram Bhavan      Kottayam   India              21
+      6000
+
+
+        ID NAME       ADDRESS         CITY       COUNTRY           AGE
+---------- ---------- --------------- ---------- ---------- ----------
+    SALARY
+----------
+      1003 Nikhil     Nikhs Palace    Kozhikode  India              35
+      3000
+
+      1004 Sija       Sija Bhavan     Thiruvalla India              28
+      2500
+
+
+SQL> alter table customer modify(country varchar(5));
+
+Table altered.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS         CITY       COUNT        AGE     SALARY
+---------- ---------- --------------- ---------- ----- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India         25       5000
+      1001 Anupama    Anu Villa       Thrissur   India         30       4500
+      1002 Ramesh     Ram Bhavan      Kottayam   India         21       6000
+      1003 Nikhil     Nikhs Palace    Kozhikode  India         35       3000
+      1004 Sija       Sija Bhavan     Thiruvalla India         28       2500
+
+SQL> alter table customer modify(country varchar(7));
+
+Table altered.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+      1003 Nikhil     Nikhs Palace    Kozhikode  India           35       3000
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where name like'P%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+
+SQL> select * from customer where name like'%nu%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+
+SQL> select * from customer where city like'%a';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where age like'2%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where salary like'%50%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where city like'ko_am';
+
+no rows selected
+
+SQL> select * from customer where city like'ko____am';
+
+no rows selected
+
+SQL> select * from customer where city like'%ko____am%';
+
+no rows selected
+
+SQL> select * from customer where city like 'Ko____am';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+
+SQL> select * from customer where salary like '3_00';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1003 Nikhil     Nikhs Palace    Kozhikode  India           35       3000
+
+SQL> select * from customer where name like'____a%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+
+SQL> select * from customer where name not like 'Priya';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+      1003 Nikhil     Nikhs Palace    Kozhikode  India           35       3000
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+
+
+SQL> create table customer(id number(5) primary key, name varchar(10), address varchar(20), city varchar(10), country varchar(10), age number(2), salary number(6,2));
+
+Table created.
+
+SQL> desc customer;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(5)
+ NAME                                               VARCHAR2(10)
+ ADDRESS                                            VARCHAR2(20)
+ CITY                                               VARCHAR2(10)
+ COUNTRY                                            VARCHAR2(10)
+ AGE                                                NUMBER(2)
+ SALARY                                             NUMBER(6,2)
+
+SQL> insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary);
+Enter value for id: 1000
+Enter value for name: Priya
+Enter value for address: Priya Bhavan
+Enter value for city: Ernakulam
+Enter value for country: India
+Enter value for age: 25
+Enter value for salary: 50000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1000, 'Priya', 'Priya Bhavan', 'Ernakulam', 'India', 25, 50000.00)
+insert into customer values(1000, 'Priya', 'Priya Bhavan', 'Ernakulam', 'India', 25, 50000.00)
+                                                                                     *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+SQL> /
+Enter value for id: 1000
+Enter value for name: Priya
+Enter value for address: Priya Bhavan
+Enter value for city: Ernakulam
+Enter value for country: India
+Enter value for age: 25
+Enter value for salary: 5000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1000, 'Priya', 'Priya Bhavan', 'Ernakulam', 'India', 25, 5000.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1001
+Enter value for name: Anupama
+Enter value for address: Anu Villa
+Enter value for city: Thrissur
+Enter value for country: India
+Enter value for age: 30
+Enter value for salary: 4500.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1001, 'Anupama', 'Anu Villa', 'Thrissur', 'India', 30, 4500.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1002
+Enter value for name: Ramesh
+Enter value for address: Ram Bhavan
+Enter value for city: Kottayam
+Enter value for country: India
+Enter value for age: 21
+Enter value for salary: 6000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1002, 'Ramesh', 'Ram Bhavan', 'Kottayam', 'India', 21, 6000.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1003
+Enter value for name: Nikhil
+Enter value for address: Nikhs Palace
+Enter value for city: Kozhikode
+Enter value for country: India
+Enter value for age: 35
+Enter value for salary: 3000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1003, 'Nikhil', 'Nikhs Palace', 'Kozhikode', 'India', 35, 3000.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1004
+Enter value for name: Sija
+Enter value for address: Sija Bhavan
+Enter value for city: Thiruvalla
+Enter value for country: India
+Enter value for age: 28
+Enter value for salary: 2500.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1004, 'Sija', 'Sija Bhavan', 'Thiruvalla', 'India', 28, 2500.00)
+
+1 row created.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS              CITY       COUNTRY           AGE
+---------- ---------- -------------------- ---------- ---------- ----------
+    SALARY
+----------
+      1000 Priya      Priya Bhavan         Ernakulam  India              25
+      5000
+
+      1001 Anupama    Anu Villa            Thrissur   India              30
+      4500
+
+      1002 Ramesh     Ram Bhavan           Kottayam   India              21
+      6000
+
+
+        ID NAME       ADDRESS              CITY       COUNTRY           AGE
+---------- ---------- -------------------- ---------- ---------- ----------
+    SALARY
+----------
+      1003 Nikhil     Nikhs Palace         Kozhikode  India              35
+      3000
+
+      1004 Sija       Sija Bhavan          Thiruvalla India              28
+      2500
+
+
+SQL> alter table customer modify(address varchr(15));
+alter table customer modify(address varchr(15))
+                                          *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> alter table customer modify(address varchar(15));
+
+Table altered.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS         CITY       COUNTRY           AGE
+---------- ---------- --------------- ---------- ---------- ----------
+    SALARY
+----------
+      1000 Priya      Priya Bhavan    Ernakulam  India              25
+      5000
+
+      1001 Anupama    Anu Villa       Thrissur   India              30
+      4500
+
+      1002 Ramesh     Ram Bhavan      Kottayam   India              21
+      6000
+
+
+        ID NAME       ADDRESS         CITY       COUNTRY           AGE
+---------- ---------- --------------- ---------- ---------- ----------
+    SALARY
+----------
+      1003 Nikhil     Nikhs Palace    Kozhikode  India              35
+      3000
+
+      1004 Sija       Sija Bhavan     Thiruvalla India              28
+      2500
+
+
+SQL> alter table customer modify(country varchar(5));
+
+Table altered.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS         CITY       COUNT        AGE     SALARY
+---------- ---------- --------------- ---------- ----- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India         25       5000
+      1001 Anupama    Anu Villa       Thrissur   India         30       4500
+      1002 Ramesh     Ram Bhavan      Kottayam   India         21       6000
+      1003 Nikhil     Nikhs Palace    Kozhikode  India         35       3000
+      1004 Sija       Sija Bhavan     Thiruvalla India         28       2500
+
+SQL> alter table customer modify(country varchar(7));
+
+Table altered.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+      1003 Nikhil     Nikhs Palace    Kozhikode  India           35       3000
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where name like'P%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+
+SQL> select * from customer where name like'%nu%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+
+SQL> select * from customer where city like'%a';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where age like'2%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where salary like'%50%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where city like'ko_am';
+
+no rows selected
+
+SQL> select * from customer where city like'ko____am';
+
+no rows selected
+
+SQL> select * from customer where city like'%ko____am%';
+
+no rows selected
+
+SQL> select * from customer where city like 'Ko____am';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+
+SQL> select * from customer where salary like '3_00';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1003 Nikhil     Nikhs Palace    Kozhikode  India           35       3000
+
+SQL> select * from customer where name like'____a%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+
+SQL> select * from customer where name not like 'Priya';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+      1003 Nikhil     Nikhs Palace    Kozhikode  India           35       3000
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+
+
+SQL> create table customer(id number(5) primary key, name varchar(10), address varchar(20), city varchar(10), country varchar(10), age number(2), salary number(6,2));
+
+Table created.
+
+SQL> desc customer;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(5)
+ NAME                                               VARCHAR2(10)
+ ADDRESS                                            VARCHAR2(20)
+ CITY                                               VARCHAR2(10)
+ COUNTRY                                            VARCHAR2(10)
+ AGE                                                NUMBER(2)
+ SALARY                                             NUMBER(6,2)
+
+SQL> insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary);
+Enter value for id: 1000
+Enter value for name: Priya
+Enter value for address: Priya Bhavan
+Enter value for city: Ernakulam
+Enter value for country: India
+Enter value for age: 25
+Enter value for salary: 50000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1000, 'Priya', 'Priya Bhavan', 'Ernakulam', 'India', 25, 50000.00)
+insert into customer values(1000, 'Priya', 'Priya Bhavan', 'Ernakulam', 'India', 25, 50000.00)
+                                                                                     *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+SQL> /
+Enter value for id: 1000
+Enter value for name: Priya
+Enter value for address: Priya Bhavan
+Enter value for city: Ernakulam
+Enter value for country: India
+Enter value for age: 25
+Enter value for salary: 5000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1000, 'Priya', 'Priya Bhavan', 'Ernakulam', 'India', 25, 5000.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1001
+Enter value for name: Anupama
+Enter value for address: Anu Villa
+Enter value for city: Thrissur
+Enter value for country: India
+Enter value for age: 30
+Enter value for salary: 4500.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1001, 'Anupama', 'Anu Villa', 'Thrissur', 'India', 30, 4500.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1002
+Enter value for name: Ramesh
+Enter value for address: Ram Bhavan
+Enter value for city: Kottayam
+Enter value for country: India
+Enter value for age: 21
+Enter value for salary: 6000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1002, 'Ramesh', 'Ram Bhavan', 'Kottayam', 'India', 21, 6000.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1003
+Enter value for name: Nikhil
+Enter value for address: Nikhs Palace
+Enter value for city: Kozhikode
+Enter value for country: India
+Enter value for age: 35
+Enter value for salary: 3000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1003, 'Nikhil', 'Nikhs Palace', 'Kozhikode', 'India', 35, 3000.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1004
+Enter value for name: Sija
+Enter value for address: Sija Bhavan
+Enter value for city: Thiruvalla
+Enter value for country: India
+Enter value for age: 28
+Enter value for salary: 2500.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1004, 'Sija', 'Sija Bhavan', 'Thiruvalla', 'India', 28, 2500.00)
+
+1 row created.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS              CITY       COUNTRY           AGE
+---------- ---------- -------------------- ---------- ---------- ----------
+    SALARY
+----------
+      1000 Priya      Priya Bhavan         Ernakulam  India              25
+      5000
+
+      1001 Anupama    Anu Villa            Thrissur   India              30
+      4500
+
+      1002 Ramesh     Ram Bhavan           Kottayam   India              21
+      6000
+
+
+        ID NAME       ADDRESS              CITY       COUNTRY           AGE
+---------- ---------- -------------------- ---------- ---------- ----------
+    SALARY
+----------
+      1003 Nikhil     Nikhs Palace         Kozhikode  India              35
+      3000
+
+      1004 Sija       Sija Bhavan          Thiruvalla India              28
+      2500
+
+
+SQL> alter table customer modify(address varchr(15));
+alter table customer modify(address varchr(15))
+                                          *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> alter table customer modify(address varchar(15));
+
+Table altered.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS         CITY       COUNTRY           AGE
+---------- ---------- --------------- ---------- ---------- ----------
+    SALARY
+----------
+      1000 Priya      Priya Bhavan    Ernakulam  India              25
+      5000
+
+      1001 Anupama    Anu Villa       Thrissur   India              30
+      4500
+
+      1002 Ramesh     Ram Bhavan      Kottayam   India              21
+      6000
+
+
+        ID NAME       ADDRESS         CITY       COUNTRY           AGE
+---------- ---------- --------------- ---------- ---------- ----------
+    SALARY
+----------
+      1003 Nikhil     Nikhs Palace    Kozhikode  India              35
+      3000
+
+      1004 Sija       Sija Bhavan     Thiruvalla India              28
+      2500
+
+
+SQL> alter table customer modify(country varchar(5));
+
+Table altered.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS         CITY       COUNT        AGE     SALARY
+---------- ---------- --------------- ---------- ----- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India         25       5000
+      1001 Anupama    Anu Villa       Thrissur   India         30       4500
+      1002 Ramesh     Ram Bhavan      Kottayam   India         21       6000
+      1003 Nikhil     Nikhs Palace    Kozhikode  India         35       3000
+      1004 Sija       Sija Bhavan     Thiruvalla India         28       2500
+
+SQL> alter table customer modify(country varchar(7));
+
+Table altered.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+      1003 Nikhil     Nikhs Palace    Kozhikode  India           35       3000
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where name like'P%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+
+SQL> select * from customer where name like'%nu%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+
+SQL> select * from customer where city like'%a';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where age like'2%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where salary like'%50%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where city like'ko_am';
+
+no rows selected
+
+SQL> select * from customer where city like'ko____am';
+
+no rows selected
+
+SQL> select * from customer where city like'%ko____am%';
+
+no rows selected
+
+SQL> select * from customer where city like 'Ko____am';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+
+SQL> select * from customer where salary like '3_00';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1003 Nikhil     Nikhs Palace    Kozhikode  India           35       3000
+
+SQL> select * from customer where name like'____a%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+
+SQL> select * from customer where name not like 'Priya';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+      1003 Nikhil     Nikhs Palace    Kozhikode  India           35       3000
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SQL> create table customer(id number(5) primary key, name varchar(10), address varchar(20), city varchar(10), country varchar(10), age number(2), salary number(6,2));
+
+Table created.
+
+SQL> desc customer;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(5)
+ NAME                                               VARCHAR2(10)
+ ADDRESS                                            VARCHAR2(20)
+ CITY                                               VARCHAR2(10)
+ COUNTRY                                            VARCHAR2(10)
+ AGE                                                NUMBER(2)
+ SALARY                                             NUMBER(6,2)
+
+SQL> insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary);
+Enter value for id: 1000
+Enter value for name: Priya
+Enter value for address: Priya Bhavan
+Enter value for city: Ernakulam
+Enter value for country: India
+Enter value for age: 25
+Enter value for salary: 50000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1000, 'Priya', 'Priya Bhavan', 'Ernakulam', 'India', 25, 50000.00)
+insert into customer values(1000, 'Priya', 'Priya Bhavan', 'Ernakulam', 'India', 25, 50000.00)
+                                                                                     *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+SQL> /
+Enter value for id: 1000
+Enter value for name: Priya
+Enter value for address: Priya Bhavan
+Enter value for city: Ernakulam
+Enter value for country: India
+Enter value for age: 25
+Enter value for salary: 5000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1000, 'Priya', 'Priya Bhavan', 'Ernakulam', 'India', 25, 5000.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1001
+Enter value for name: Anupama
+Enter value for address: Anu Villa
+Enter value for city: Thrissur
+Enter value for country: India
+Enter value for age: 30
+Enter value for salary: 4500.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1001, 'Anupama', 'Anu Villa', 'Thrissur', 'India', 30, 4500.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1002
+Enter value for name: Ramesh
+Enter value for address: Ram Bhavan
+Enter value for city: Kottayam
+Enter value for country: India
+Enter value for age: 21
+Enter value for salary: 6000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1002, 'Ramesh', 'Ram Bhavan', 'Kottayam', 'India', 21, 6000.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1003
+Enter value for name: Nikhil
+Enter value for address: Nikhs Palace
+Enter value for city: Kozhikode
+Enter value for country: India
+Enter value for age: 35
+Enter value for salary: 3000.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1003, 'Nikhil', 'Nikhs Palace', 'Kozhikode', 'India', 35, 3000.00)
+
+1 row created.
+
+SQL> /
+Enter value for id: 1004
+Enter value for name: Sija
+Enter value for address: Sija Bhavan
+Enter value for city: Thiruvalla
+Enter value for country: India
+Enter value for age: 28
+Enter value for salary: 2500.00
+old   1: insert into customer values(&id, '&name', '&address', '&city', '&country', &age, &salary)
+new   1: insert into customer values(1004, 'Sija', 'Sija Bhavan', 'Thiruvalla', 'India', 28, 2500.00)
+
+1 row created.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS              CITY       COUNTRY           AGE
+---------- ---------- -------------------- ---------- ---------- ----------
+    SALARY
+----------
+      1000 Priya      Priya Bhavan         Ernakulam  India              25
+      5000
+
+      1001 Anupama    Anu Villa            Thrissur   India              30
+      4500
+
+      1002 Ramesh     Ram Bhavan           Kottayam   India              21
+      6000
+
+
+        ID NAME       ADDRESS              CITY       COUNTRY           AGE
+---------- ---------- -------------------- ---------- ---------- ----------
+    SALARY
+----------
+      1003 Nikhil     Nikhs Palace         Kozhikode  India              35
+      3000
+
+      1004 Sija       Sija Bhavan          Thiruvalla India              28
+      2500
+
+
+SQL> alter table customer modify(address varchr(15));
+alter table customer modify(address varchr(15))
+                                          *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> alter table customer modify(address varchar(15));
+
+Table altered.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS         CITY       COUNTRY           AGE
+---------- ---------- --------------- ---------- ---------- ----------
+    SALARY
+----------
+      1000 Priya      Priya Bhavan    Ernakulam  India              25
+      5000
+
+      1001 Anupama    Anu Villa       Thrissur   India              30
+      4500
+
+      1002 Ramesh     Ram Bhavan      Kottayam   India              21
+      6000
+
+
+        ID NAME       ADDRESS         CITY       COUNTRY           AGE
+---------- ---------- --------------- ---------- ---------- ----------
+    SALARY
+----------
+      1003 Nikhil     Nikhs Palace    Kozhikode  India              35
+      3000
+
+      1004 Sija       Sija Bhavan     Thiruvalla India              28
+      2500
+
+
+SQL> alter table customer modify(country varchar(5));
+
+Table altered.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS         CITY       COUNT        AGE     SALARY
+---------- ---------- --------------- ---------- ----- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India         25       5000
+      1001 Anupama    Anu Villa       Thrissur   India         30       4500
+      1002 Ramesh     Ram Bhavan      Kottayam   India         21       6000
+      1003 Nikhil     Nikhs Palace    Kozhikode  India         35       3000
+      1004 Sija       Sija Bhavan     Thiruvalla India         28       2500
+
+SQL> alter table customer modify(country varchar(7));
+
+Table altered.
+
+SQL> select * from customer;
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+      1003 Nikhil     Nikhs Palace    Kozhikode  India           35       3000
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where name like'P%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+
+SQL> select * from customer where name like'%nu%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+
+SQL> select * from customer where city like'%a';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where age like'2%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where salary like'%50%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> select * from customer where city like'ko_am';
+
+no rows selected
+
+SQL> select * from customer where city like'ko____am';
+
+no rows selected
+
+SQL> select * from customer where city like'%ko____am%';
+
+no rows selected
+
+SQL> select * from customer where city like 'Ko____am';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+
+SQL> select * from customer where salary like '3_00';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1003 Nikhil     Nikhs Palace    Kozhikode  India           35       3000
+
+SQL> select * from customer where name like'____a%';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1000 Priya      Priya Bhavan    Ernakulam  India           25       5000
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+
+SQL> select * from customer where name not like 'Priya';
+
+        ID NAME       ADDRESS         CITY       COUNTRY        AGE     SALARY
+---------- ---------- --------------- ---------- ------- ---------- ----------
+      1001 Anupama    Anu Villa       Thrissur   India           30       4500
+      1002 Ramesh     Ram Bhavan      Kottayam   India           21       6000
+      1003 Nikhil     Nikhs Palace    Kozhikode  India           35       3000
+      1004 Sija       Sija Bhavan     Thiruvalla India           28       2500
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

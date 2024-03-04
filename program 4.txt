@@ -1,0 +1,421 @@
+SQL> connect system
+Enter password:
+Connected.
+SQL> create table category (cat_id varchar(5) primary key, cat_name varchar(10), description varchar(40));
+
+Table created.
+
+SQL> desc category;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CAT_ID                                    NOT NULL VARCHAR2(5)
+ CAT_NAME                                           VARCHAR2(10)
+ DESCRIPTION                                        VARCHAR2(40)
+
+SQL> create table product (pro_id varchar(5) primary key, pro_name vachar(10), cat_id varchar(5), price number(3) foreign key (cat_id) references category(cat_id));
+create table product (pro_id varchar(5) primary key, pro_name vachar(10), cat_id varchar(5), price number(3) foreign key (cat_id) references category(cat_id))
+                                                                    *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table product (pro_id varchar(5) primary key, pro_name vachar(10), cat_id varchar(5), price number(3), foreign key (cat_id) references category(cat_id));
+create table product (pro_id varchar(5) primary key, pro_name vachar(10), cat_id varchar(5), price number(3), foreign key (cat_id) references category(cat_id))
+                                                                    *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table product (pro_id varchar(5) primary key, pro_name varchar(10), cat_id varchar(5), price number(3), foreign key (cat_id) references category(cat_id));
+
+Table created.
+
+SQL> desc product;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PRO_ID                                    NOT NULL VARCHAR2(5)
+ PRO_NAME                                           VARCHAR2(10)
+ CAT_ID                                             VARCHAR2(5)
+ PRICE                                              NUMBER(3)
+
+SQL> insert into category values('&cat_id', '&cat_name', '&description');
+Enter value for cat_id: cat01
+Enter value for cat_name: Beverages
+Enter value for description: For drinking
+old   1: insert into category values('&cat_id', '&cat_name', '&description')
+new   1: insert into category values('cat01', 'Beverages', 'For drinking')
+
+1 row created.
+
+SQL> /
+Enter value for cat_id: cat02
+Enter value for cat_name: Spices
+Enter value for description: For cooking
+old   1: insert into category values('&cat_id', '&cat_name', '&description')
+new   1: insert into category values('cat02', 'Spices ', 'For cooking')
+
+1 row created.
+
+SQL> /
+Enter value for cat_id: cat03
+Enter value for cat_name: Stationary
+Enter value for description: School items
+old   1: insert into category values('&cat_id', '&cat_name', '&description')
+new   1: insert into category values('cat03', 'Stationary', 'School items')
+
+1 row created.
+
+SQL> select * from category;
+
+CAT_I CAT_NAME   DESCRIPTION
+----- ---------- ----------------------------------------
+cat01 Beverages  For drinking
+cat02 Spices     For cooking
+cat03 Stationary School items
+
+SQL> insert into product values('&pro_id','&pro_name','&cat_id',&number);
+Enter value for pro_id: pro01
+Enter value for pro_name: Tea
+Enter value for cat_id: cat01
+Enter value for number: 20
+old   1: insert into product values('&pro_id','&pro_name','&cat_id',&number)
+new   1: insert into product values('pro01','Tea','cat01',20)
+
+1 row created.
+
+SQL> select * from product;
+
+PRO_I PRO_NAME   CAT_I      PRICE
+----- ---------- ----- ----------
+pro01 Tea        cat01         20
+
+SQL> insert into product values('&pro_id','&pro_name','&cat_id',&price);
+Enter value for pro_id: pro02
+Enter value for pro_name: Notebooks
+Enter value for cat_id: cat03
+Enter value for price: 50
+old   1: insert into product values('&pro_id','&pro_name','&cat_id',&price)
+new   1: insert into product values('pro02','Notebooks','cat03',50)
+
+1 row created.
+
+SQL> /
+Enter value for pro_id: pro04
+Enter value for pro_name:
+Enter value for cat_id:
+Enter value for price:
+old   1: insert into product values('&pro_id','&pro_name','&cat_id',&price)
+new   1: insert into product values('pro04','','',)
+insert into product values('pro04','','',)
+                                         *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> /
+Enter value for pro_id: pro03
+Enter value for pro_name: Cloves
+Enter value for cat_id: cat02
+Enter value for price: 60
+old   1: insert into product values('&pro_id','&pro_name','&cat_id',&price)
+new   1: insert into product values('pro03','Cloves','cat02',60)
+
+1 row created.
+
+SQL> /
+Enter value for pro_id: pro04
+Enter value for pro_name: Pencil
+Enter value for cat_id: 5
+Enter value for price:
+old   1: insert into product values('&pro_id','&pro_name','&cat_id',&price)
+new   1: insert into product values('pro04','Pencil','5',)
+insert into product values('pro04','Pencil','5',)
+                                                *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> /
+Enter value for pro_id: pro04
+Enter value for pro_name: Pencil
+Enter value for cat_id: cat03
+Enter value for price: 5
+old   1: insert into product values('&pro_id','&pro_name','&cat_id',&price)
+new   1: insert into product values('pro04','Pencil','cat03',5)
+
+1 row created.
+
+SQL> /
+Enter value for pro_id: pro05
+Enter value for pro_name: Fizz
+Enter value for cat_id: cat01
+Enter value for price: 30
+old   1: insert into product values('&pro_id','&pro_name','&cat_id',&price)
+new   1: insert into product values('pro05','Fizz','cat01',30)
+
+1 row created.
+
+SQL> select * from product;
+
+PRO_I PRO_NAME   CAT_I      PRICE
+----- ---------- ----- ----------
+pro01 Tea        cat01         20
+pro02 Notebooks  cat03         50
+pro03 Cloves     cat02         60
+pro04 Pencil     cat03          5
+pro05 Fizz       cat01         30
+
+SQL> select * from category;
+
+CAT_I CAT_NAME   DESCRIPTION
+----- ---------- ----------------------------------------
+cat01 Beverages  For drinking
+cat02 Spices     For cooking
+cat03 Stationary School items
+
+SQL> select pro_id, pro_name,cat_name from product natural join category;
+
+PRO_I PRO_NAME   CAT_NAME
+----- ---------- ----------
+pro01 Tea        Beverages
+pro02 Notebooks  Stationary
+pro03 Cloves     Spices
+pro04 Pencil     Stationary
+pro05 Fizz       Beverages
+
+SQL> select pro_id, pro_name,cat_name from product inner join category on product.cat_id = category.cat_id;;
+select pro_id, pro_name,cat_name from product inner join category on product.cat_id = category.cat_id;
+                                                                                                     *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> select pro_id, pro_name,cat_name from product inner join category on product.cat_id = category.cat_id;
+
+PRO_I PRO_NAME   CAT_NAME
+----- ---------- ----------
+pro01 Tea        Beverages
+pro02 Notebooks  Stationary
+pro03 Cloves     Spices
+pro04 Pencil     Stationary
+pro05 Fizz       Beverages
+
+SQL> select pro_id, pro_name,cat_name from product natural right outer join category;
+
+PRO_I PRO_NAME   CAT_NAME
+----- ---------- ----------
+pro01 Tea        Beverages
+pro02 Notebooks  Stationary
+pro03 Cloves     Spices
+pro04 Pencil     Stationary
+pro05 Fizz       Beverages
+
+SQL> select pro_id, pro_name,cat_name from product natural left outer join category;
+
+PRO_I PRO_NAME   CAT_NAME
+----- ---------- ----------
+pro05 Fizz       Beverages
+pro01 Tea        Beverages
+pro03 Cloves     Spices
+pro04 Pencil     Stationary
+pro02 Notebooks  Stationary
+
+SQL> select pro_id, pro_name,cat_name from product natural full outer join category;
+
+PRO_I PRO_NAME   CAT_NAME
+----- ---------- ----------
+pro05 Fizz       Beverages
+pro01 Tea        Beverages
+pro03 Cloves     Spices
+pro04 Pencil     Stationary
+pro02 Notebooks  Stationary
+
+SQL> delete from category where cat_name = 'Spices';
+
+0 rows deleted.
+
+SQL> delete from product where pro_name = 'Cloves';
+
+1 row deleted.
+
+SQL> select * from product;
+
+PRO_I PRO_NAME   CAT_I      PRICE
+----- ---------- ----- ----------
+pro01 Tea        cat01         20
+pro02 Notebooks  cat03         50
+pro04 Pencil     cat03          5
+pro05 Fizz       cat01         30
+
+SQL> select * from category;
+
+CAT_I CAT_NAME   DESCRIPTION
+----- ---------- ----------------------------------------
+cat01 Beverages  For drinking
+cat02 Spices     For cooking
+cat03 Stationary School items
+
+SQL> select pro_id, pro_name,cat_name from product natural join category;
+
+PRO_I PRO_NAME   CAT_NAME
+----- ---------- ----------
+pro01 Tea        Beverages
+pro02 Notebooks  Stationary
+pro04 Pencil     Stationary
+pro05 Fizz       Beverages
+
+SQL> select pro_id, pro_name,cat_name from product inner join category on product.cat_id = category.cat_id;
+
+PRO_I PRO_NAME   CAT_NAME
+----- ---------- ----------
+pro01 Tea        Beverages
+pro02 Notebooks  Stationary
+pro04 Pencil     Stationary
+pro05 Fizz       Beverages
+
+SQL> select pro_id, pro_name,cat_name from product natural right outer join category;
+
+PRO_I PRO_NAME   CAT_NAME
+----- ---------- ----------
+pro01 Tea        Beverages
+pro02 Notebooks  Stationary
+pro04 Pencil     Stationary
+pro05 Fizz       Beverages
+                 Spices
+
+SQL> select pro_id, pro_name,cat_name from product natural left outer join category;
+
+PRO_I PRO_NAME   CAT_NAME
+----- ---------- ----------
+pro05 Fizz       Beverages
+pro01 Tea        Beverages
+pro04 Pencil     Stationary
+pro02 Notebooks  Stationary
+
+SQL> select * from product;
+
+PRO_I PRO_NAME   CAT_I      PRICE
+----- ---------- ----- ----------
+pro01 Tea        cat01         20
+pro02 Notebooks  cat03         50
+pro04 Pencil     cat03          5
+pro05 Fizz       cat01         30
+
+SQL> select * from category;;
+select * from category;
+                      *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> select * from category;
+
+CAT_I CAT_NAME   DESCRIPTION
+----- ---------- ----------------------------------------
+cat01 Beverages  For drinking
+cat02 Spices     For cooking
+cat03 Stationary School items
+
+SQL> select * from product natural left outer join category;
+
+CAT_I PRO_I PRO_NAME        PRICE CAT_NAME
+----- ----- ---------- ---------- ----------
+DESCRIPTION
+----------------------------------------
+cat01 pro05 Fizz               30 Beverages
+For drinking
+
+cat01 pro01 Tea                20 Beverages
+For drinking
+
+cat03 pro04 Pencil              5 Stationary
+School items
+
+
+CAT_I PRO_I PRO_NAME        PRICE CAT_NAME
+----- ----- ---------- ---------- ----------
+DESCRIPTION
+----------------------------------------
+cat03 pro02 Notebooks          50 Stationary
+School items
+
+
+SQL> alter table category modify(description varchar(20));
+
+Table altered.
+
+SQL> select * from product natural left outer join category;
+
+CAT_I PRO_I PRO_NAME        PRICE CAT_NAME   DESCRIPTION
+----- ----- ---------- ---------- ---------- --------------------
+cat01 pro05 Fizz               30 Beverages  For drinking
+cat01 pro01 Tea                20 Beverages  For drinking
+cat03 pro04 Pencil              5 Stationary School items
+cat03 pro02 Notebooks          50 Stationary School items
+
+SQL> select * from product natural right outer join category;
+
+CAT_I PRO_I PRO_NAME        PRICE CAT_NAME   DESCRIPTION
+----- ----- ---------- ---------- ---------- --------------------
+cat01 pro01 Tea                20 Beverages  For drinking
+cat03 pro02 Notebooks          50 Stationary School items
+cat03 pro04 Pencil              5 Stationary School items
+cat01 pro05 Fizz               30 Beverages  For drinking
+cat02                             Spices     For cooking
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from category;
+
+CAT_I CAT_NAME   DESCRIPTION
+----- ---------- --------------------
+cat01 Beverages  For drinking
+cat02 Spices     For cooking
+cat03 Stationary School items
+
+SQL> select * from product;
+
+PRO_I PRO_NAME   CAT_I      PRICE
+----- ---------- ----- ----------
+pro01 Tea        cat01         20
+pro02 Notebooks  cat03         50
+pro04 Pencil     cat03          5
+pro05 Fizz       cat01         30
+
+SQL> select * from product natural full outer join category;
+
+CAT_I PRO_I PRO_NAME        PRICE CAT_NAME   DESCRIPTION
+----- ----- ---------- ---------- ---------- --------------------
+cat01 pro05 Fizz               30 Beverages  For drinking
+cat01 pro01 Tea                20 Beverages  For drinking
+cat03 pro04 Pencil              5 Stationary School items
+cat03 pro02 Notebooks          50 Stationary School items
+cat02                             Spices     For cooking
+
+SQL> select pro_id, pro_name,cat_name from product natural full outer join category;
+
+PRO_I PRO_NAME   CAT_NAME
+----- ---------- ----------
+pro05 Fizz       Beverages
+pro01 Tea        Beverages
+pro04 Pencil     Stationary
+pro02 Notebooks  Stationary
+                 Spices
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+
+
+
+
+
+
+
+
+
+
