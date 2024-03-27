@@ -1,0 +1,33 @@
+*********************************************************SQL OPERATIONS************************************************************
+
+
+1. select R.sid from boats B, reserve R where R.bid = B.bid AND B.color = 'red' UNION select R2.sid from boats B2, reserve R2 where R2.bid = B2.bid AND b2.color = 'green';
+
+       SID
+----------
+        22
+        31
+        64
+        74
+
+2. select S.sname from sailor S where S.sid in (select R.sid from reserve R where R.bid = 103);
+
+SNAME
+----------
+Dustin
+Lubber
+Horatio
+
+3. select S.sname , S.age from sailor S where S.age <= ALL (select age from sailor);
+
+SNAME             AGE
+---------- ----------
+Zorba              16
+
+
+
+4. select S.sname from sailor S where NOT EXISTS (select B.bid from boats B where NOT EXISTS (select R.bid from reserve R where R.bid = B.bid AND R.sid = S.sid));
+
+SNAME
+----------
+Dustin

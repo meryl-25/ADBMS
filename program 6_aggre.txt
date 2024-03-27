@@ -1,0 +1,39 @@
+
+*********************************AGGREGATE OPERATIONS**************************************
+
+
+
+1. select S.sname , S.age from sailor S where S.age = (select MIN(S.age) from sailor S);
+
+SNAME             AGE
+---------- ----------
+Zorba              16
+
+
+
+2. select S.rating , AVG(S.age) AS average_age from sailor S GROUP BY S.rating;
+
+    RATING AVERAGE_AGE
+---------- -----------
+         1          33
+         8          40
+         7          40
+         3          44
+        10        25.5
+         9          35
+
+6 rows selected.
+
+
+3. select COUNT (distinct S.sname) from sailor S;
+
+COUNT(DISTINCTS.SNAME)
+----------------------
+                     9
+
+
+4. select AVG(S.age) from sailor S;
+
+AVG(S.AGE)
+----------
+      36.7
