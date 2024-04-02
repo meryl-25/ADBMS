@@ -1,0 +1,208 @@
+***************************************************************************BASIC OPERATIONS****************************************************************************
+
+
+
+SQL> desc sailor;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                       NOT NULL NUMBER(5)
+ SNAME                                              VARCHAR2(10)
+ RATING                                             NUMBER(38)
+ AGE                                                NUMBER(2)
+
+SQL> desc boats;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BID                                       NOT NULL NUMBER(3)
+ BNAME                                              VARCHAR2(10)
+ COLOR                                              VARCHAR2(8)
+
+SQL> desc reserve;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(5)
+ BID                                                NUMBER(5)
+ DAY                                                DATE
+
+SQL> select * from sailor;
+
+       SID SNAME          RATING        AGE
+---------- ---------- ---------- ----------
+        22 Dustin              7         45
+        29 Brutus              1         33
+        31 Lubber              8         55
+        32 Andy                8         25
+        58 Rusty              10         35
+        64 Horatio             7         35
+        71 Zorba              10         16
+        74 Horatio             9         35
+        85 Art                 3         25
+        95 Bob                 3         63
+
+10 rows selected.
+
+SQL> select * from boats;
+
+       BID BNAME      COLOR
+---------- ---------- --------
+       101 Interlake  blue
+       102 Interlake  red
+       103 Clipper    green
+       104 Marine     red
+
+SQL> select * from reserve;
+
+no rows selected
+
+SQL> insert into reserve values(22,101,'10-Mar-98');
+
+1 row created.
+
+SQL> insert into reserve values(22,102,'10-Oct-98');
+
+1 row created.
+
+SQL> insert into reserve values(22,103,'10-Aug-98');
+
+1 row created.
+
+SQL> insert into reserve values(22,104,'10-Jul-98');
+
+1 row created.
+
+SQL> insert into reserve values(31,102,'11-Oct-98');
+
+1 row created.
+
+SQL> insert into reserve values(31,103,'11-Jun-98');
+
+1 row created.
+
+SQL> insert into reserve values(31,104,'11-Dec-98');
+
+1 row created.
+
+SQL> insert into reserve values(64,101,'9-May-98');
+
+1 row created.
+
+SQL> insert into reserve values(64,102,'9-Aug-98');
+
+1 row created.
+
+SQL> insert into reserve values(74,103,'9-Aug-98');
+
+1 row created.
+
+SQL> select * from reserve;
+
+       SID        BID DAY
+---------- ---------- ---------
+        22        101 10-MAR-98
+        22        102 10-OCT-98
+        22        103 10-AUG-98
+        22        104 10-JUL-98
+        31        102 11-OCT-98
+        31        103 11-JUN-98
+        31        104 11-DEC-98
+        64        101 09-MAY-98
+        64        102 09-AUG-98
+        74        103 09-AUG-98
+
+10 rows selected.
+
+
+
+SQL> update reserve set day='10-Oct-98' where sid = 22 and bid = 101;
+
+1 row updated.
+
+SQL> select * from reserve;
+
+       SID        BID DAY
+---------- ---------- ---------
+        22        101 10-OCT-98
+        22        102 10-OCT-98
+        22        103 10-AUG-98
+        22        104 10-JUL-98
+        31        102 11-OCT-98
+        31        103 11-JUN-98
+        31        104 11-DEC-98
+        64        101 09-MAY-98
+        64        102 09-AUG-98
+        74        103 09-AUG-98
+
+10 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select distinct sname from sailor;
+
+SNAME
+----------
+Rusty
+Lubber
+Brutus
+Andy
+Art
+Bob
+Dustin
+Zorba
+Horatio
+
+9 rows selected.
+
+SQL> select * from sailor,reserve where bid = 101 and sailor.sid = reserve.sid;
+
+       SID SNAME          RATING        AGE        SID        BID DAY
+---------- ---------- ---------- ---------- ---------- ---------- ---------
+        22 Dustin              7         45         22        101 10-OCT-98
+        64 Horatio             7         35         64        101 09-MAY-98
+
+SQL> select sname from sailor where sid in ( select sid from reserve group by sid );
+
+SNAME
+----------
+Dustin
+Lubber
+Horatio
+Horatio
+
+SQL> select sname from sailor,reserve,boats where sailor.sid = reserve.sid AND reserve.bid = boats.bid AND boats.color = 'Red' order by age;
+
+no rows selected
+
+SQL> select sname from sailor,reserve,boats where sailor.sid = reserve.sid AND reserve.bid = boats.bid AND boats.color = 'red' order by age;
+
+SNAME
+----------
+Horatio
+Dustin
+Dustin
+Lubber
+Lubber
+
+SQL> select sname, bname, color from sailor,reserve,boats where sailor.sid = reserve.sid AND reserve.bid = boats.bid AND boats.color = 'Red' order by age;
+
+no rows selected
+
+SQL> select sname, bname, color from sailor,reserve,boats where sailor.sid = reserve.sid AND reserve.bid = boats.bid AND boats.color = 'red' order by age;
+
+SNAME      BNAME      COLOR
+---------- ---------- --------
+Horatio    Interlake  red
+Dustin     Interlake  red
+Dustin     Marine     red
+Lubber     Marine     red
+Lubber     Interlake  red
+
+
+
+
+SQL> select distinct S.sid, S.sname from sailor S, reserve R1, reserve R2 where S.sid = R1.sid AND S.sid = R2.sid AND R1.day = R2.day AND R1.bid <> R2.bid;
+
+       SID SNAME
+---------- ----------
+        22 Dustin

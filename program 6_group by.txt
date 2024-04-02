@@ -1,0 +1,22 @@
+***************************** USING GROUP BY***************************
+
+
+ select S.rating, min (S.age) FROM sailor S GROUP BY S.rating;
+
+    RATING MIN(S.AGE)
+---------- ----------
+         1         33
+         8         25
+         7         35
+         3         25
+        10         16
+         9         35
+
+SELECT sailor_name FROM Sailor WHERE sailor_id IN (SELECT sailor_id FROM Reserves WHERE boat_id = 10) INTERSECT SELECT sailor_name FROM Sailors;
+
+SELECT sname, age FROM Sailor WHERE age = ( SELECT MIN(age) FROM Sailor);
+
+SELECT sname, age FROM Sailor WHERE age = ( SELECT MIN(age) FROM Sailor) INTERSECT SELECT sname, age FROM Sailor;
+
+SELECT sname FROM Sailor INTERSECT SELECT sname FROM Reserve JOIN Boats ON Reserve.bid = Boats.bid GROUP BY sname HAVING COUNT(DISTINCT Reserve.bid) = (SELECT COUNT(*) FROM Boats);
+

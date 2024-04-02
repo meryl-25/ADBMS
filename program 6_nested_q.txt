@@ -1,0 +1,25 @@
+************************************************************************NESTED QUERY***********************************************************************************
+
+
+
+1. select S.sname from sailor S where S.sid in (select R.sid from reserve R where R.bid = 103);
+
+SNAME
+----------
+Dustin
+Lubber
+Horatio
+
+2. select S.sname , S.age from sailor S where S.age <= ALL (select age from sailor);
+
+SNAME             AGE
+---------- ----------
+Zorba              16
+
+
+
+3. select S.sname from sailor S where NOT EXISTS (select B.bid from boats B where NOT EXISTS (select R.bid from reserve R where R.bid = B.bid AND R.sid = S.sid));
+
+SNAME
+----------
+Dustin

@@ -1,0 +1,34 @@
+*******************************************************************************SET OPERATIONS**************************************************************************
+
+
+1. select R.sid from boats B, reserve R where R.bid = B.bid AND B.color = 'red' UNION select R2.sid from boats B2, reserve R2 where R2.bid = B2.bid AND b2.color = 'green';
+
+       SID
+----------
+        22
+        31
+        64
+        74
+
+
+2. select sname from sailor where sid IN (select sid from reserve where bid = 103) INTERSECT select sname from sailor;
+
+SNAME
+----------
+Dustin
+Horatio
+Lubber
+
+
+3. select sname, age from Sailor where age = ( SELECT MIN(age) FROM Sailor) INTERSECT select sname, age FROM Sailor;
+
+SNAME             AGE
+---------- ----------
+Zorba              16
+
+
+4. select S.sname from sailor S where NOT EXISTS (select B.bid from boats B where NOT EXISTS (select R.bid from reserve R where R.bid = B.bid AND R.sid = S.sid));
+
+SNAME
+----------
+Dustin
