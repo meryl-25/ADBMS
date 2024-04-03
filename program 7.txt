@@ -1,0 +1,130 @@
+********************************************************************************** TCL COMMANDS ************************************************************************
+
+
+1.  create table account(acc_no number(6) primary key, name varchar(10), salary number(6));
+
+Table created.
+
+
+2.  insert into account values(12345, 'Meryl', 650000);
+
+1 row created.
+
+SQL> insert into account values(12346, 'Sonu', 600000);
+
+1 row created.
+
+SQL> insert into account values(12347, 'Shebin', 500000);
+
+1 row created.
+
+SQL> insert into account values(12348, 'Malavika', 550000);
+
+1 row created.
+
+SQL> insert into account values(12349, 'Naaz', 555000);
+
+1 row created.
+
+
+3. commit;
+
+Commit complete.
+
+
+4. select * from account;
+
+    ACC_NO NAME           SALARY
+---------- ---------- ----------
+     12345 Meryl          650000
+     12346 Sonu           600000
+     12347 Shebin         500000
+     12348 Malavika       550000
+     12349 Naaz           555000
+
+
+
+5. insert into account values(12350,'Sandriya',750000);
+
+1 row created.
+
+SQL> insert into account values(12351,'Anura',700000);
+
+1 row created.
+
+
+
+6.  savepoint S;
+
+Savepoint created.
+
+
+
+7. insert into account values(12352,'Livya',700000);
+
+1 row created.
+
+SQL> insert into account values(12353,'Santa',750000);
+
+1 row created.
+
+
+
+8. select * from account;
+
+    ACC_NO NAME           SALARY
+---------- ---------- ----------
+     12345 Meryl          650000
+     12346 Sonu           600000
+     12347 Shebin         500000
+     12348 Malavika       550000
+     12349 Naaz           555000
+     12350 Sandriya       750000
+     12351 Anura          700000
+     12352 Livya          700000
+     12353 Santa          750000
+
+9 rows selected.
+
+
+
+9. rollback to S;
+
+Rollback complete.
+
+SQL> select * from account;
+
+    ACC_NO NAME           SALARY
+---------- ---------- ----------
+     12345 Meryl          650000
+     12346 Sonu           600000
+     12347 Shebin         500000
+     12348 Malavika       550000
+     12349 Naaz           555000
+     12350 Sandriya       750000
+     12351 Anura          700000
+
+7 rows selected.
+
+
+10. rollback;
+
+Rollback complete.
+
+SQL> select * from account;
+
+    ACC_NO NAME           SALARY
+---------- ---------- ----------
+     12345 Meryl          650000
+     12346 Sonu           600000
+     12347 Shebin         500000
+     12348 Malavika       550000
+     12349 Naaz           555000
+
+
+
+
+
+
+
+
