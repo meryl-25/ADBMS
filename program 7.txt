@@ -172,3 +172,41 @@ SQL> select * from account;
      12348 Malavika       550000
      12349 Naaz           555000
 
+SQL> insert into account values(12350,'Anura',755000);
+
+1 row created.
+
+SQL> insert into account values(12351,'Sandriya',750000);
+
+1 row created.
+
+
+SQL> savepoint S;
+
+Savepoint created.
+
+
+SQL> insert into account values(12352,'Livya',600000);
+
+1 row created.
+
+SQL> insert into account values(12353,'Santa',650000);
+
+1 row created.
+
+
+SQL> select * from account;
+
+    ACC_NO NAME           SALARY
+---------- ---------- ----------
+     12345 Meryl          650000
+     12346 Sonu           600000
+     12347 Shebin         500000
+     12348 Malavika       550000
+     12349 Naaz           555000
+     12350 Anura          755000
+     12351 Sandriya       750000
+     12352 Livya          600000
+     12353 Santa          650000
+
+9 rows selected.
