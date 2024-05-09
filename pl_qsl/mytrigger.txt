@@ -1,0 +1,265 @@
+SQL> connect system;
+Enter password:
+Connected.
+SQL> create table xy(id int, name varchar(10),age int);
+
+Table created.
+
+SQL> insert into xy values(1,Meryl,21);
+insert into xy values(1,Meryl,21)
+                        *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into xy values(1,'Meryl',21);
+
+1 row created.
+
+SQL> insert into xy values(2,'Soma',26);
+
+1 row created.
+
+SQL> insert into xy values(3,'Balu',24);
+
+1 row created.
+
+SQL> select * from xy;
+
+        ID NAME              AGE
+---------- ---------- ----------
+         1 Meryl              21
+         2 Soma               26
+         3 Balu               24
+
+SQL> create table testtable(action varchar(50), action_date date);
+
+Table created.
+
+SQL> select * from testtable;
+
+no rows selected
+
+SQL> insert into xy values(4,'Radhika',26);
+
+1 row created.
+
+SQL> select * from testtable;
+
+ACTION                                             ACTION_DA
+-------------------------------------------------- ---------
+insert done                                        09-MAY-24
+
+SQL> update xy set age=24 where id=2;
+
+1 row updated.
+
+SQL> select * from testtable;
+
+ACTION                                             ACTION_DA
+-------------------------------------------------- ---------
+insert done                                        09-MAY-24
+update done                                        09-MAY-24
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SQL> connect system;
+Enter password:
+Connected.
+SQL> create table xy(id int, name varchar(10),age int);
+
+Table created.
+
+SQL> insert into xy values(1,Meryl,21);
+insert into xy values(1,Meryl,21)
+                        *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into xy values(1,'Meryl',21);
+
+1 row created.
+
+SQL> insert into xy values(2,'Soma',26);
+
+1 row created.
+
+SQL> insert into xy values(3,'Balu',24);
+
+1 row created.
+
+SQL> select * from xy;
+
+        ID NAME              AGE
+---------- ---------- ----------
+         1 Meryl              21
+         2 Soma               26
+         3 Balu               24
+
+SQL> create table testtable(action varchar(50), action_date date);
+
+Table created.
+
+SQL> select * from testtable;
+
+no rows selected
+
+SQL> insert into xy values(4,'Radhika',26);
+
+1 row created.
+
+SQL> select * from testtable;
+
+ACTION                                             ACTION_DA
+-------------------------------------------------- ---------
+insert done                                        09-MAY-24
+
+SQL> update xy set age=24 where id=2;
+
+1 row updated.
+
+SQL> select * from testtable;
+
+ACTION                                             ACTION_DA
+-------------------------------------------------- ---------
+insert done                                        09-MAY-24
+update done                                        09-MAY-24
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SQL> connect system;
+Enter password:
+Connected.
+SQL> create table xy(id int, name varchar(10),age int);
+
+Table created.
+
+
+SQL> insert into xy values(1,'Meryl',21);
+
+1 row created.
+
+SQL> insert into xy values(2,'Soma',26);
+
+1 row created.
+
+SQL> insert into xy values(3,'Balu',24);
+
+1 row created.
+
+SQL> select * from xy;
+
+        ID NAME              AGE
+---------- ---------- ----------
+         1 Meryl              21
+         2 Soma               26
+         3 Balu               24
+
+SQL> create table testtable(action varchar(50), action_date date);
+
+Table created.
+
+SQL> select * from testtable;
+
+no rows selected
+
+SQL> insert into xy values(4,'Radhika',26);
+
+1 row created.
+
+SQL> select * from testtable;
+
+ACTION                                             ACTION_DA
+-------------------------------------------------- ---------
+insert done                                        09-MAY-24
+
+SQL> update xy set age=24 where id=2;
+
+1 row updated.
+
+SQL> select * from testtable;
+
+ACTION                                             ACTION_DA
+-------------------------------------------------- ---------
+insert done                                        09-MAY-24
+update done                                        09-MAY-24
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
