@@ -1,0 +1,23 @@
+PROGRAM 1
+----------
+
+create table student (rollno int primary key, name varchar(20), course varchar(20), year int);
+desc student;
+
+insert into student values (1,'Ajay','MCA',2024);
+insert into student values (20,'Manoj','EC',2024);
+insert into student values (15,'cris','Mech',2024);
+
+select * from student;
+
+alter table student add college varchar(20);
+alter table student modify (college int);
+alter table student drop column college;
+
+drop table student;
+truncate table student;
+
+PROGRAM 2
+---------
+
+create table employee (empid int, empname varchar(20), dept varchar(10), salary int, city varchar(10));

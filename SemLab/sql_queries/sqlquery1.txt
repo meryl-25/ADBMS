@@ -1,0 +1,90 @@
+1. create table employee (empid int primary key, empname varchar(10), dept varchar(10), salary int, city varchar(10) );
+
+2. insert into employee values (1000, 'Meryl', 'Sales', 25000, 'Kochi');
+   insert into employee values(1001, 'Sonu', 'Marketing', 45000, 'Bangalore');
+   insert into employee values (1002, 'Anura', 'Sales', 50000, 'Chennai');
+   insert into employee values(1003, 'Sandriya', 'Finance', 35000, 'Mumbai');
+   insert into employee values (1004, 'Santa', 'HR', 55000, 'Thrissur');
+
+   select * from employee;
+
+
+empid       empname    dept       salary      city      
+----------- ---------- ---------- ----------- ----------
+       1000 Meryl      Sales            25000 Kochi     
+       1001 Sonu       Marketing        45000 Bangalore 
+       1002 Anura      Sales            50000 Chennai   
+       1003 Sandriya   Finance          35000 Mumbai    
+       1004 Santa      HR               55000 Thrissur  
+
+
+3. select * from employee where empid=1000;
+
+empid       empname    dept       salary      city      
+----------- ---------- ---------- ----------- ----------
+       1000 Meryl      Sales            25000 Kochi    
+ 
+
+4. select * from employee where salary between 10000 and 30000;
+
+empid       empname    dept       salary      city      
+----------- ---------- ---------- ----------- ----------
+       1000 Meryl      Sales            25000 Kochi    
+
+
+
+5. select * from employee order by empname; 
+
+empid       empname    dept       salary      city      
+----------- ---------- ---------- ----------- ----------
+       1002 Anura      Sales            50000 Chennai   
+       1000 Meryl      Sales            25000 Kochi     
+       1003 Sandriya   Finance          35000 Mumbai    
+       1004 Santa      HR               55000 Thrissur  
+       1001 Sonu       Marketing        45000 Bangalore 
+
+
+
+6. select * from employee order by salary;
+
+empid       empname    dept       salary      city      
+----------- ---------- ---------- ----------- ----------
+       1000 Meryl      Sales            25000 Kochi     
+       1003 Sandriya   Finance          35000 Mumbai    
+       1001 Sonu       Marketing        45000 Bangalore 
+       1002 Anura      Sales            50000 Chennai   
+       1004 Santa      HR               55000 Thrissur  
+
+
+7. update employee set salary = 250 where empid = 1000;
+
+empid       empname    dept       salary      city      
+----------- ---------- ---------- ----------- ----------
+       1000 Meryl      Sales              250 Kochi     
+       1001 Sonu       Marketing        45000 Bangalore 
+       1002 Anura      Sales            50000 Chennai   
+       1003 Sandriya   Finance          35000 Mumbai    
+       1004 Santa      HR               55000 Thrissur  
+
+
+8. alter table employee add doj date;
+
+empid       empname    dept       salary      city       doj             
+----------- ---------- ---------- ----------- ---------- ----------------
+       1000 Meryl      Sales              250 Kochi                  NULL
+       1001 Sonu       Marketing        45000 Bangalore              NULL
+       1002 Anura      Sales            50000 Chennai                NULL
+       1003 Sandriya   Finance          35000 Mumbai                 NULL
+       1004 Santa      HR               55000 Thrissur               NULL
+
+
+9. update employee set doj = '20-Mar-2024';
+
+empid       empname    dept       salary      city       doj             
+----------- ---------- ---------- ----------- ---------- ----------------
+       1000 Meryl      Sales              250 Kochi            2024-03-20
+       1001 Sonu       Marketing        45000 Bangalore        2024-03-20
+       1002 Anura      Sales            50000 Chennai          2024-03-20
+       1003 Sandriya   Finance          35000 Mumbai           2024-03-20
+       1004 Santa      HR               55000 Thrissur         2024-03-20
+

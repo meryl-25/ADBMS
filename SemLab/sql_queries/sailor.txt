@@ -1,0 +1,233 @@
+create table sailors (sid int primary key, sname varchar (10), rating int, age int);
+
+create table boats (bid int primary key, bname varchar(10), color varchar(10));
+
+create table reserves (sid int, bid int, day date foreign key(sid) references sailors(sid), 
+foreign key(bid) references boats(bid));
+
+insert into sailors values (22,'Dustin',7,45);
+insert into sailors values (29,'Brutus',1,33);
+insert into sailors values (31,'Lubber',8,55);
+insert into sailors values (32,'Andy',8,25);
+insert into sailors values (58,'Rusty',10,35);
+insert into sailors values (64,'Horatio',7,35);
+insert into sailors values (71,'Zorba',10,16);
+insert into sailors values (74,'Horatio',9,35);
+insert into sailors values (85,'Art',3,25);
+insert into sailors values (95,'Bob',3,63);
+
+select * from sailors;
+
+
+
+sid         sname      rating      age        
+----------- ---------- ----------- -----------
+         22 Dustin               7          45
+         29 Brutus               1          33
+         31 Lubber               8          55
+         32 Andy                 8          25
+         58 Rusty               10          35
+         64 Horatio              7          35
+         71 Zorba               10          16
+         74 Horatio              9          35
+         85 Art                  3          25
+         95 Bob                  3          63
+
+
+insert into boats values (101,'Interlake','blue');
+insert into boats values (102,'Interlake','red');
+insert into boats values (103,'Clipper','green');
+insert into boats values (104,'Marine','red');
+
+select * from boats;
+
+
+bid         bname      color     
+----------- ---------- ----------
+        101 Interlake  blue      
+        102 Interlake  red       
+        103 Clipper    green     
+        104 Marine     red       
+
+
+
+insert into reserves values (22,101,'10-Oct-1998');
+insert into reserves values (22,102,'10-Oct-1998');
+insert into reserves values (22,103,'10-Aug-1998');
+insert into reserves values (22,104,'10-Jul-1998');
+insert into reserves values (31,102,'11-Oct-1998');
+insert into reserves values (31,103,'11-Jun-1998');
+insert into reserves values (31,104,'11-Dec-1998');
+insert into reserves values (64,101,'09-May-1998');
+insert into reserves values (64,102,'09-Aug-1998');
+insert into reserves values (74,103,'09-Aug-1998');
+
+
+select * from reserves;
+
+
+sid         bid         day             
+----------- ----------- ----------------
+         22         101       1998-10-10
+         22         102       1998-10-10
+         22         103       1998-08-10
+         22         104       1998-07-10
+         31         102       1998-10-11
+         31         103       1998-06-11
+         31         104       1998-12-11
+         64         101       1998-05-09
+         64         102       1998-08-09
+         74         103       1998-08-09
+
+
+select distinct sname from sailors;
+
+sname     
+----------
+Andy      
+Art       
+Bob       
+Brutus    
+Dustin    
+Horatio   
+Lubber    
+Rusty     
+Zorba     
+
+
+select * from sailors S, reserves R where bid = 103 and S.sid = R.sid;
+
+
+sid         sname      rating      age         sid         bid         day             
+----------- ---------- ----------- ----------- ----------- ----------- ----------------
+         22 Dustin               7          45          22         103       1998-08-10
+         31 Lubber               8          55          31         103       1998-06-11
+         74 Horatio              9          35          74         103       1998-08-09
+
+
+select distinct S.sid, S.sname from sailors S join reserves R on S.sid = R.sid; 
+
+
+sid         sname     
+----------- ----------
+         22 Dustin    
+         31 Lubber    
+         64 Horatio   
+         74 Horatio   
+
+
+
+select S.sid, S.sname from sailors S join reserves R on S.sid = R.sid 
+join boats B on R.bid = B.bid where B.color = 'red' order by S.age;
+
+
+sid         sname     
+----------- ----------
+         64 Horatio   
+         22 Dustin    
+         22 Dustin    
+         31 Lubber    
+         31 Lubber    
+
+
+select s.sid, s.sname from sailors s join reserves r1 on s.sid = r1.sid 
+join reserves r2 on s.sid = r2.sid and r1.day = r2.day and r1.bid != r2.bid
+group by s.sid, s.sname;
+
+
+sid         sname     
+----------- ----------
+         22 Dustin    
+
+
+select distinct S.sid, S.sname from sailors S join reserves R on S.sid = R.sid 
+join boats B on R.bid = B.bid where B.color = 'red' or B.color = 'green';
+
+
+sid         sname     
+----------- ----------
+         22 Dustin    
+         31 Lubber    
+         64 Horatio   
+         74 Horatio   
+
+
+select s.sname from sailors s join reserves r on s.sid = r.sid where r.bid = 103;
+
+sname     
+----------
+Dustin    
+Lubber    
+Horatio   
+
+
+
+select sname, age from sailors where age = (select min(age) from sailors);
+
+sname      age        
+---------- -----------
+Zorba               16
+
+
+select rating, AVG(age) as average_age from sailors group by rating;
+
+
+rating      average_age
+----------- -----------
+          1          33
+          3          44
+          7          40
+          8          40
+          9          35
+         10          25
+
+
+select count (distinct sname) from sailors;
+
+count
+-----------
+          9
+
+select avg (age) from sailors;
+
+
+average
+-----------
+         36
+
+select s.rating, min(s.age) from sailors s group by s.rating; 
+
+
+rating                 
+----------- -----------
+          1          33
+          3          25
+          7          35
+          8          25
+          9          35
+         10          16
+
+select s.sname from sailors s where s.sid in (select R.sid from reserves R where R.bid = 103);
+
+sname     
+----------
+Dustin    
+Lubber    
+Horatio   
+
+
+select s.sname ,s.age from sailors s where s.age <= all (select age from sailors);
+
+
+sname      age        
+---------- -----------
+Zorba               16
+
+
+SELECT s.sname FROM sailors s WHERE ( SELECT COUNT(DISTINCT bid) FROM boats) =
+( SELECT COUNT(DISTINCT bid) FROM reserves r WHERE r.sid = s.sid );
+
+
+sname     
+----------
+Dustin    

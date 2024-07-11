@@ -1,0 +1,205 @@
+1.	Consider the following database for a banking enterprise.
+
+	BRANCH ( branch_name:string , branch_city:string , assets:real )
+	ACCOUNT ( accno:int , branch_name:string , balance:real )
+	DEPOSITOR ( customer_name:string , accno:int )
+	CUSTOMER ( customer_name:string , customer_street:string , customer_city:string )
+	LOAN ( loan_number:int , branch_name:string , amount:real )
+	BORROWER ( customer_name:string , loan_number:int )
+
+	1) Create the above tables by properly specifying the primary keys and foreign keys.
+	2) Enter at least five tuples for each relation.
+	3) Find all the customers who have accounts at the specific branch.
+	4) Find all the customers who have a loan at the branches located in a specific city.
+        5) Find all the customers who have both account and loan at the branches located in a specific city.
+	6) Demonstrate how you delete all account tuples at every branch located in a specific city.
+
+
+
+
+
+
+------------------------------------------------------------------------------------- 1 -------------------------------------------------------------------------------
+
+create table Branch (bname varchar(20) primary key , bcity varchar(10), assets int);
+
+create table Account (accno int primary key, bname varchar(20), balance int, foreign key(bname) references Branch(bname));
+
+create table Customer (custname varchar(10) primary key, custstreet varchar(15), custcity varchar(10));
+
+create table Depositor (custname varchar(10), accno int, foreign key (custname) references Customer(custname), foreign key (accno) references Account(accno) );
+
+create table Loan (loanno int primary key, bname varchar (20), amount int);
+
+create table Borrower (custname varchar(10), loanno int, foreign key (custname) references Customer(Custname) , foreign key (loanno) references Loan(loanno) );
+
+------------------------------------------------------------------------------------- 2 -------------------------------------------------------------------------------
+
+insert into Branch values ('HDFC Konni', 'Thiruvalla', 15000000);
+insert into Branch values ('HDFC Punalur', 'Kollam', 25000000);
+insert into Branch values ('HDFC Nellimattam', 'Ernakulam', 10000000);
+insert into Branch values ('HDFC Ranni', 'Thodupuzha', 15500000);
+insert into Branch values ('HDFC Ayur', 'Trivandrum', 30000000);
+
+select * from Branch;
+
+bname                bcity      assets     
+-------------------- ---------- -----------
+HDFC Ayur            Trivandrum    30000000
+HDFC Konni           Thiruvalla    15000000
+HDFC Nellimattam     Ernakulam     10000000
+HDFC Punalur         Kollam        25000000
+HDFC Ranni           Thodupuzha    15500000
+
+
+insert into Account values (101, 'HDFC Ayur', 75000);
+insert into Account values (102, 'HDFC Punalur', 25000);
+insert into Account values (103, 'HDFC Nellimattam', 100000);
+insert into Account values (104, 'HDFC Ranni',  15500);
+insert into Account values (105, 'HDFC Konni', 3000);
+
+select * from Account;
+
+
+accno       bname                balance    
+----------- -------------------- -----------
+        101 HDFC Ayur                  75000
+        102 HDFC Punalur               25000
+        103 HDFC Nellimattam          100000
+        104 HDFC Ranni                 15500
+        105 HDFC Konni                  3000
+
+
+insert into Customer values ('Meryl','Konni','Thiruvalla');
+insert into Customer values ('Sonu','Ayur','Trivandrum');
+insert into Customer values ('Marshal','Ranni','Thodupuzha');
+insert into Customer values ('Soniya','Nellimattam','Ernakulam');
+insert into Customer values ('Mini','Punalur','Kollam');
+
+select * from Customer;
+
+custname   custstreet      custcity  
+---------- --------------- ----------
+Marshal    Ranni           Thodupuzha
+Meryl      Konni           Thiruvalla
+Mini       Punalur         Kollam    
+Soniya     Nellimattam     Ernakulam 
+Sonu       Ayur            Trivandrum
+
+insert into Depositor values ('Meryl',105);
+insert into Depositor values ('Sonu',101);
+insert into Depositor values ('Soniya',103);
+insert into Depositor values ('Marshal',104);
+insert into Depositor values ('Mini',102);
+
+select * from Depositor;
+
+custname   accno      
+---------- -----------
+Meryl              105
+Sonu               101
+Soniya             103
+Marshal            104
+Mini               102
+
+
+insert into Loan values (1001,'HDFC Konni',50000);
+insert into Loan values (1002,'HDFC Ayur',50000);
+insert into Loan values (1003,'HDFC Nellimattam',50000);
+insert into Loan values (1004,'HDFC Punalur',50000);
+insert into Loan values (1005,'HDFC Ranni',50000);
+
+select * from Loan;
+
+
+loanno      bname                amount     
+----------- -------------------- -----------
+       1001 HDFC Konni                 50000
+       1002 HDFC Ayur                  50000
+       1003 HDFC Nellimattam           50000
+       1004 HDFC Punalur               50000
+       1005 HDFC Ranni                 50000
+
+insert into Borrower values ('Meryl',1001);
+insert into Borrower values ('Sonu',1002);
+insert into Borrower values ('Soniya',1003);
+insert into Borrower values ('Marshal',1005);
+insert into Borrower values ('Mini',1004);
+
+select * from Borrower;
+
+custname   loanno     
+---------- -----------
+Meryl             1001
+Sonu              1002
+Soniya            1003
+Marshal           1005
+Mini              1004
+
+
+------------------------------------------------------------------------------------- 3 -------------------------------------------------------------------------------
+
+
+select C.custname from Customer C join Depositor D on C.custname = D.custname join Account A on D.accno = A.accno where A.bname = 'HDFC Konni';
+
+custname  
+----------
+Meryl     
+
+------------------------------------------------------------------------------------- 4 -------------------------------------------------------------------------------
+
+
+select C.custname from Customer C join Borrower B on C.custname = B.custname join Loan L on B.loanno = L.loanno join Branch Br on L.bname = Br.bname 
+where Br.bcity =  'Trivandrum';
+
+
+custname  
+----------
+Sonu      
+
+------------------------------------------------------------------------------------- 5 -------------------------------------------------------------------------------
+
+
+select C.custname from Customer C join Depositor D on C.custname = D.custname join Account A on D.accno = A.accno join Branch BA on A.bname = BA.bname 
+join Borrower B on C.custname = B.custname join Loan L on B.loanno = L.loanno join Branch BL on L.bname = BL.bname where BA.bcity = 'Kollam' and BL.bcity = 'Kollam';
+
+
+custname  
+----------
+Mini     
+
+------------------------------------------------------------------------------------- 6 -------------------------------------------------------------------------------
+
+
+delete D from Depositor D join Account A on D.accno = A.accno join Branch B on A.bname = B.bname where B.bcity = 'Thiruvalla';
+
+delete A from Account A join Branch B on A.bname = B.bname where B.bcity = 'Thiruvalla';
+
+select * from Account;
+
+accno       bname                balance    
+----------- -------------------- -----------
+        101 HDFC Ayur                  75000
+        102 HDFC Punalur               25000
+        103 HDFC Nellimattam          100000
+        104 HDFC Ranni                 15500
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

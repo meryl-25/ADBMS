@@ -1,0 +1,342 @@
+
+--------------------------------------------------------------------------- create databse ----------------------------------------------------------------------------
+
+use Company
+
+switched to db Company
+{ "ok" : 1 }
+
+----------------------------------------------------------------------- make collection -------------------------------------------------------------------------------
+
+
+db.createCollection('EmployeeDetails')
+
+
+---------------------------------------------------------------------------- insert records ----------------------------------------------------------------------------
+
+
+db.EmployeeDetails.insertOne ( {id:101, empname:'Meryl', salary:15000, designation:'Clerk'} )
+db.EmployeeDetails.insertOne ( {id:102, empname:'Sonu', salary:25000, designation:'Administrator'} )
+db.EmployeeDetails.insertOne ( {id:103, empname:'Soniya', salary:10000, designation:'Supervisor'} )
+db.EmployeeDetails.insertOne ( {id:104, empname:'Marshal', salary:15000, designation:'Clerk'} )
+db.EmployeeDetails.insertOne ( {id:105, empname:'Mini', salary:20000, designation:'Administrator'} )
+db.EmployeeDetails.insertOne ( {id:106, empname:'John', salary:25000, designation:'Manager'} )
+
+
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("668eb292b7a79c65c9784e4a")
+}
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("668eb292b7a79c65c9784e4b")
+}
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("668eb292b7a79c65c9784e4c")
+}
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("668eb292b7a79c65c9784e4d")
+}
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("668eb292b7a79c65c9784e4e")
+}
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("668eb292b7a79c65c9784e4f")
+}
+
+
+
+----------------------------------------------------------------------- list all details ------------------------------------------------------------------------------
+
+
+db.EmployeeDetails.find().pretty()
+
+
+
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4a"),
+	"id" : 101,
+	"empname" : "Meryl",
+	"salary" : 15000,
+	"designation" : "Clerk"
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4b"),
+	"id" : 102,
+	"empname" : "Sonu",
+	"salary" : 25000,
+	"designation" : "Administrator"
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4c"),
+	"id" : 103,
+	"empname" : "Soniya",
+	"salary" : 10000,
+	"designation" : "Supervisor"
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4d"),
+	"id" : 104,
+	"empname" : "Marshal",
+	"salary" : 15000,
+	"designation" : "Clerk"
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4e"),
+	"id" : 105,
+	"empname" : "Mini",
+	"salary" : 20000,
+	"designation" : "Administrator"
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4f"),
+	"id" : 106,
+	"empname" : "John",
+	"salary" : 25000,
+	"designation" : "Manager"
+}
+
+
+---------------------------------------------------------- find document where name begins with 'S' ----------------------------------------------------------------------
+
+
+db.EmployeeDetails.find( {'empname' : {$regex:/^S/} } )
+
+
+{ "_id" : ObjectId("668eb292b7a79c65c9784e4b"), "id" : 102, "empname" : "Sonu", "salary" : 25000, "designation" : "Administrator" }
+{ "_id" : ObjectId("668eb292b7a79c65c9784e4c"), "id" : 103, "empname" : "Soniya", "salary" : 10000, "designation" : "Supervisor" }
+
+
+
+------------------------------------------------------- update salary of employee 'Meryl' by 1000 -----------------------------------------------------------------------------
+
+
+db.EmployeeDetails.findOneAndUpdate( {'empname' : 'Meryl'}, {$inc : {salary:1000}}, {returnDocument:'after'} )
+
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4a"),
+	"id" : 101,
+	"empname" : "Meryl",
+	"salary" : 15000,
+	"designation" : "Clerk"
+}
+{ "acknowledged" : true, "matchedCount" : 6, "modifiedCount" : 6 }
+
+
+
+---------------------------------------------------------- add a new filed joining with name doj -----------------------------------------------------------------------
+
+
+db.EmployeeDetails.updateMany( {}, {$set : {'doj' : '' }} )
+db.EmployeeDetails.find().pretty()
+
+
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4a"),
+	"id" : 101,
+	"empname" : "Meryl",
+	"salary" : 16000,
+	"designation" : "Clerk",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4b"),
+	"id" : 102,
+	"empname" : "Sonu",
+	"salary" : 25000,
+	"designation" : "Administrator",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4c"),
+	"id" : 103,
+	"empname" : "Soniya",
+	"salary" : 10000,
+	"designation" : "Supervisor",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4d"),
+	"id" : 104,
+	"empname" : "Marshal",
+	"salary" : 15000,
+	"designation" : "Clerk",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4e"),
+	"id" : 105,
+	"empname" : "Mini",
+	"salary" : 20000,
+	"designation" : "Administrator",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4f"),
+	"id" : 106,
+	"empname" : "John",
+	"salary" : 25000,
+	"designation" : "Manager",
+	"doj" : ""
+}
+
+--------------------------------------------------------------------- sum of salaries of 'Clerk' -----------------------------------------------------------------------
+
+
+
+db.EmployeeDetails.aggregate( [ {$match : {designation : 'Clerk'}} ,{$group : {_id:'$designation', totalsalary : {$sum : '$salary'}}} ] )
+
+
+{ "_id" : "Clerk", "totalsalary" : 31000 }
+{ "acknowledged" : true, "deletedCount" : 1 }
+
+
+
+------------------------------------------------------------- delete employee with id '106' ------------------------------------------------------------------------------
+
+
+db.EmployeeDetails.deleteOne ( {id:106} )
+db.EmployeeDetails.find().pretty()
+
+
+
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4a"),
+	"id" : 101,
+	"empname" : "Meryl",
+	"salary" : 16000,
+	"designation" : "Clerk",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4b"),
+	"id" : 102,
+	"empname" : "Sonu",
+	"salary" : 25000,
+	"designation" : "Administrator",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4c"),
+	"id" : 103,
+	"empname" : "Soniya",
+	"salary" : 10000,
+	"designation" : "Supervisor",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4d"),
+	"id" : 104,
+	"empname" : "Marshal",
+	"salary" : 15000,
+	"designation" : "Clerk",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4e"),
+	"id" : 105,
+	"empname" : "Mini",
+	"salary" : 20000,
+	"designation" : "Administrator",
+	"doj" : ""
+}
+
+
+----------------------------------------------------------------------- create user and give roles --------------------------------------------------------------------
+
+
+use admin
+
+switched to db admin
+
+
+
+db.createUser ( {user:'Mohan',pwd:'mohan123',roles: [ {role: 'readWrite', db:'Company' }]})
+
+
+Successfully added user: {
+	"user" : "Mohan",
+	"roles" : [
+		{
+			"role" : "readWrite",
+			"db" : "Company"
+		}
+	]
+}
+
+
+
+use Mohan
+
+switched to db Mohan
+
+show dbs
+
+Company    0.000GB
+admin      0.000GB
+config     0.000GB
+emp        0.000GB
+employee   0.000GB
+fisatdb    0.000GB
+gt         0.000GB
+justindb   0.000GB
+justindb3  0.000GB
+local      0.000GB
+ppp        0.000GB
+sandydb    0.000GB
+techDB     0.000GB
+
+
+
+use Company
+
+switched to db Company
+
+
+
+db.EmployeeDetails.find().pretty()
+
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4a"),
+	"id" : 101,
+	"empname" : "Meryl",
+	"salary" : 16000,
+	"designation" : "Clerk",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4b"),
+	"id" : 102,
+	"empname" : "Sonu",
+	"salary" : 25000,
+	"designation" : "Administrator",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4c"),
+	"id" : 103,
+	"empname" : "Soniya",
+	"salary" : 10000,
+	"designation" : "Supervisor",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4d"),
+	"id" : 104,
+	"empname" : "Marshal",
+	"salary" : 15000,
+	"designation" : "Clerk",
+	"doj" : ""
+}
+{
+	"_id" : ObjectId("668eb292b7a79c65c9784e4e"),
+	"id" : 105,
+	"empname" : "Mini",
+	"salary" : 20000,
+	"designation" : "Administrator",
+	"doj" : ""
+}
